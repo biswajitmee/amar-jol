@@ -15,6 +15,7 @@ const LEAF_WIDTH = 0.13;
 const LEAF_LENGTH = 0.23;
 const PLANE_NORMAL = new Vector3(0, 0, 1);
 const UP_NORMAL = new Vector3(0, 1, 0);
+const sampleNames = ["center", "front", "back", "left", "right"];
 const contactSamples = [
   [-0.5, -0.5],
   [0.5, -0.5],
@@ -111,9 +112,11 @@ export default function FallingLeaf({
   color = "#d47c5a",
   impactRadius = 0.055,
   texture = null,
+  debug = false,
 }) {
   const meshRef = useRef(null);
   const materialRef = useRef(null);
+  const sampleRefs = useRef([]);
   const alignQuatRef = useRef(new Quaternion());
   const yawQuatRef = useRef(new Quaternion());
   const targetQuatRef = useRef(new Quaternion());
@@ -133,6 +136,26 @@ export default function FallingLeaf({
     velocity: new Vector3(),
   });
   const materialColor = useMemo(() => new Color(color), [color]);
+  const debugColor = useMemo(() => new Color("#f7fff5"), []);
+
+  function updateSampleMarkers(samples) {
+    if (!debug) {
+      return;
+    }
+
+    sampleRefs.current.forEach((marker, index) => {
+      if (!marker) {
+        return;
+      }
+
+      const sample = samples?.[index];
+      marker.visible = Boolean(sample);
+
+      if (sample) {
+        marker.position.set(sample.x, sample.waterHeight + 0.018, sample.z);
+      }
+    });
+  }
 
   useEffect(() => {
     const mesh = meshRef.current;
@@ -174,6 +197,8 @@ export default function FallingLeaf({
     leafState.age += delta;
 
     if (leafState.mode === "falling") {
+      updateSampleMarkers(null);
+
       const gravity = Math.max(0.35, Math.abs(fallSpeed) * 1.85);
       const terminalFallSpeed = Math.max(0.55, Math.abs(fallSpeed) * 2.8);
       const windX =
@@ -280,6 +305,8 @@ export default function FallingLeaf({
         verticalDamping: 0.84,
         applyRotation: false,
       });
+      updateSampleMarkers(buoyancyResult?.samples);
+
       mesh.position.x +=
         Math.sin(time * 0.56 + leafState.seed) * wind * 0.18 * delta +
         leafState.velocity.x * 0.1 * delta;
@@ -321,6 +348,8 @@ export default function FallingLeaf({
       return;
     }
 
+    updateSampleMarkers(null);
+
     const driftX =
       Math.sin(time * 0.72 + leafState.seed * 2.4) * wind * 0.32 +
       Math.cos(time * 0.31 + leafState.seed) * 0.018;
@@ -348,26 +377,45 @@ export default function FallingLeaf({
   });
 
   return (
-    <mesh
-      ref={meshRef}
-      position={startVector}
-      scale={scaleArray}
-      renderOrder={34}
-      frustumCulled={false}
-    >
-      <planeGeometry args={[LEAF_WIDTH, LEAF_LENGTH, 2, 6]} />
-      <meshStandardMaterial
-        ref={materialRef}
-        map={texture ?? undefined}
-        color={texture ? "#ffffff" : materialColor}
-        side={DoubleSide}
-        roughness={0.76}
-        metalness={0}
-        transparent
-        opacity={0.9}
-        alphaTest={texture ? 0.08 : 0}
-        depthWrite={false}
-      />
-    </mesh>
+    <>
+      <mesh
+        ref={meshRef}
+        position={startVector}
+        scale={scaleArray}
+        renderOrder={34}
+        frustumCulled={false}
+      >
+        <planeGeometry args={[LEAF_WIDTH, LEAF_LENGTH, 2, 6]} />
+        <meshStandardMaterial
+          ref={materialRef}
+          map={texture ?? undefined}
+          color={texture ? "#ffffff" : materialColor}
+          side={DoubleSide}
+          roughness={0.76}
+          metalness={0}
+          transparent
+          opacity={0.9}
+          alphaTest={texture ? 0.08 : 0}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {debug
+        ? sampleNames.map((name, index) => (
+            <mesh
+              key={name}
+              ref={(node) => {
+                sampleRefs.current[index] = node;
+              }}
+              visible={false}
+              renderOrder={80}
+              frustumCulled={false}
+            >
+              <sphereGeometry args={[0.018, 10, 8]} />
+              <meshBasicMaterial color={debugColor} toneMapped={false} />
+            </mesh>
+          ))
+        : null}
+    </>
   );
 }

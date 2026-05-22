@@ -1,0 +1,33 @@
+{
+  "presets": {
+    "hero-water-custom": {
+      "preset": "cinematicProductHero",
+      "waterPosition": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "waterScale": 2.81,
+      "waterSize": {
+        "x": 16,
+        "y": 5,
+        "z": 16
+      },
+      "waveStrength": 0.22999999999999998,
+      "waveSpeed": 0.88,
+      "waveScale": 2.08,
+      "rippleStrength": 1.3800000000000001,
+      "rippleDamping": 0.991,
+      "foamStrength": 1.06,
+      "reflectionStrength": 1.1400000000000001,
+      "fresnelPower": 6,
+      "underwaterEnabled": true,
+      "underwaterFogColor": "#0f5870",
+      "underwaterFogDensity": 0.05,
+      "causticsStrength": 0.46,
+      "showRippleTexture": true,
+      "showFoamTexture": false,
+      "showBuoyancySamplePoints": false
+    }
+  }
+}

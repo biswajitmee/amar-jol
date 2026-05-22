@@ -14,7 +14,11 @@ import {
   Vector3,
 } from "three";
 import UnderwaterFX from "./UnderwaterFX";
-import { WATER_PRO_PRESETS, useWaterDebugPanel } from "./debug/WaterDebugPanel";
+import {
+  DEFAULT_WATER_PRO_PRESET,
+  WATER_PRO_PRESETS,
+  useWaterDebugPanel,
+} from "./debug/WaterDebugPanel";
 import FallingLeaf from "./objects/FallingLeaf";
 import waterFragmentShader from "./shaders/waterPro.fragment.glsl";
 import waterVertexShader from "./shaders/waterPro.vertex.glsl";
@@ -22,8 +26,14 @@ import { useRippleFBO } from "./sim/useRippleFBO";
 import { useWaterSimulation } from "./sim/useWaterSimulation";
 
 const defaultSettings = {
+  preset: DEFAULT_WATER_PRO_PRESET,
   width: 4.2,
   depth: 2.35,
+  waterSize: {
+    x: 4.2,
+    y: 1,
+    z: 2.35,
+  },
   segments: 96,
   fboSize: 128,
   waveStrength: 0.72,
@@ -55,6 +65,9 @@ const defaultSettings = {
   causticsColor: "#bfffea",
   sunDirection: [0.36, 0.78, 0.5],
   showDemoLeaves: true,
+  showRippleTexture: false,
+  showFoamTexture: false,
+  showBuoyancySamplePoints: false,
   waves: [
     [1, 0.18, 0.082, 2.7, 0],
     [0.32, 1, 0.056, 1.85, 1.7],
@@ -81,25 +94,133 @@ function toVector3(value) {
   return new Vector3(value?.[0] ?? 0.36, value?.[1] ?? 0.78, value?.[2] ?? 0.5).normalize();
 }
 
+function toVectorArray(value, fallback = [0, 0, 0]) {
+  const fallbackVector =
+    fallback instanceof Vector3
+      ? [fallback.x, fallback.y, fallback.z]
+      : fallback;
+
+  return [
+    value?.x ?? value?.[0] ?? fallbackVector?.[0] ?? 0,
+    value?.y ?? value?.[1] ?? fallbackVector?.[1] ?? 0,
+    value?.z ?? value?.[2] ?? fallbackVector?.[2] ?? 0,
+  ];
+}
+
+function normalizeWaterSize(value, defaults) {
+  const width = value?.x ?? value?.[0] ?? defaults.width ?? 4.2;
+  const vertical = value?.y ?? value?.[1] ?? 1;
+  const depth = value?.z ?? value?.[2] ?? defaults.depth ?? 2.35;
+
+  return {
+    x: Math.max(0.05, width),
+    y: Math.max(0.05, vertical),
+    z: Math.max(0.05, depth),
+  };
+}
+
+function WaterTextureDebugPreview({
+  rippleTexture,
+  foamTexture,
+  showRippleTexture,
+  showFoamTexture,
+  emptyTexture,
+  width,
+  depth,
+}) {
+  const previewSize = Math.min(0.72, Math.max(0.38, width * 0.16));
+  const previewGap = previewSize * 0.18;
+  const visiblePreviews = [
+    showRippleTexture
+      ? {
+          key: "ripple",
+          texture: rippleTexture ?? emptyTexture,
+        }
+      : null,
+    showFoamTexture
+      ? {
+          key: "foam",
+          texture: foamTexture ?? emptyTexture,
+        }
+      : null,
+  ].filter(Boolean);
+
+  if (!visiblePreviews.length) {
+    return null;
+  }
+
+  const totalWidth = visiblePreviews.length * previewSize + (visiblePreviews.length - 1) * previewGap;
+  const startX = -totalWidth / 2 + previewSize / 2;
+
+  return (
+    <group position={[0, 0.07, -depth / 2 - previewSize * 0.68]}>
+      {visiblePreviews.map((preview, index) => (
+        <mesh
+          key={preview.key}
+          position={[startX + index * (previewSize + previewGap), 0, 0]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          renderOrder={92}
+          frustumCulled={false}
+        >
+          <planeGeometry args={[previewSize, previewSize, 1, 1]} />
+          <meshBasicMaterial
+            map={preview.texture}
+            transparent
+            opacity={0.94}
+            depthTest={false}
+            depthWrite={false}
+            side={DoubleSide}
+            toneMapped={false}
+          />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
 export default function WaterPro({
   position = [0, 0, 0],
   rotation = [0, 0, 0],
   scale = 1,
   debug = true,
+  theatreSettings = null,
+  usePanelTransform = true,
+  onDebugSettingsChange,
   onUnderwaterChange,
   ...overrides
 }) {
-  const panelValues = useWaterDebugPanel(defaultSettings);
-  const presetValues = WATER_PRO_PRESETS[panelValues.preset] ?? WATER_PRO_PRESETS.softHero;
-  const settings = {
+  const panelValues = useWaterDebugPanel(defaultSettings, { position, scale });
+  const selectedPreset =
+    theatreSettings?.preset ??
+    (debug ? panelValues.preset : overrides.preset) ??
+    defaultSettings.preset;
+  const presetValues =
+    WATER_PRO_PRESETS[selectedPreset] ?? WATER_PRO_PRESETS[DEFAULT_WATER_PRO_PRESET];
+  const rawSettings = {
     ...defaultSettings,
     ...presetValues,
     ...(debug ? panelValues : {}),
+    ...(theatreSettings ?? {}),
     ...overrides,
   };
+  const waterSize = normalizeWaterSize(rawSettings.waterSize, rawSettings);
+  const settings = {
+    ...rawSettings,
+    waterSize,
+    width: waterSize.x,
+    depth: waterSize.z,
+    waveStrength: (rawSettings.waveStrength ?? defaultSettings.waveStrength) * waterSize.y,
+  };
+  const waterPosition =
+    debug && usePanelTransform
+      ? toVectorArray(panelValues.waterPosition, position)
+      : position;
+  const waterScale =
+    debug && usePanelTransform ? panelValues.waterScale ?? scale : scale;
 
   const materialRef = useRef(null);
   const groupRef = useRef(null);
+  const lastDebugSettingsKeyRef = useRef("");
   const emptyTexture = useMemo(() => makeEmptyTexture(), []);
   const simulation = useWaterSimulation(settings);
   const rippleFBO = useRippleFBO({
@@ -178,6 +299,19 @@ export default function WaterPro({
   });
 
   useEffect(() => {
+    if (debug && onDebugSettingsChange) {
+      const nextKey = JSON.stringify(panelValues);
+
+      if (nextKey === lastDebugSettingsKeyRef.current) {
+        return;
+      }
+
+      lastDebugSettingsKeyRef.current = nextKey;
+      onDebugSettingsChange?.(panelValues);
+    }
+  }, [debug, onDebugSettingsChange, panelValues]);
+
+  useEffect(() => {
     return () => {
       emptyTexture.dispose();
       material.dispose();
@@ -185,7 +319,7 @@ export default function WaterPro({
   }, [emptyTexture, material]);
 
   return (
-    <group ref={groupRef} position={position} rotation={rotation} scale={scale}>
+    <group ref={groupRef} position={waterPosition} rotation={rotation} scale={waterScale}>
       <mesh renderOrder={22} frustumCulled={false}>
         <planeGeometry args={[settings.width, settings.depth, settings.segments, settings.segments]} />
         <primitive
@@ -194,6 +328,15 @@ export default function WaterPro({
           object={material}
         />
       </mesh>
+      <WaterTextureDebugPreview
+        rippleTexture={rippleFBO.rippleTexture}
+        foamTexture={rippleFBO.foamTexture}
+        showRippleTexture={settings.showRippleTexture}
+        showFoamTexture={settings.showFoamTexture}
+        emptyTexture={emptyTexture}
+        width={settings.width}
+        depth={settings.depth}
+      />
       <UnderwaterFX
         waterGroupRef={groupRef}
         waterMaterialRef={materialRef}
@@ -221,6 +364,7 @@ export default function WaterPro({
             sinkSpeed={0.055}
             impactStrength={0.34}
             impactRadius={settings.rippleRadius}
+            debug={settings.showBuoyancySamplePoints}
           />
           <FallingLeaf
             simulation={simulation}
@@ -236,6 +380,7 @@ export default function WaterPro({
             impactStrength={0.27}
             impactRadius={settings.rippleRadius * 0.82}
             color="#c06f54"
+            debug={settings.showBuoyancySamplePoints}
           />
         </>
       ) : null}

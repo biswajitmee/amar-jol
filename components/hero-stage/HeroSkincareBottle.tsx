@@ -7,6 +7,7 @@ import {
   ClampToEdgeWrapping,
   DoubleSide,
   Group,
+  MathUtils,
   SRGBColorSpace,
 } from "three";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
@@ -103,7 +104,12 @@ export default function HeroSkincareBottle({ settings }: HeroSkincareBottleProps
       settings.bottleZ,
     );
     groupRef.current.scale.setScalar(settings.bottleScale);
-    groupRef.current.rotation.y = Math.sin(time * 0.18) * 0.035;
+    groupRef.current.rotation.set(
+      MathUtils.degToRad(settings.bottleRotationX ?? 0),
+      MathUtils.degToRad(settings.bottleRotationY ?? 0) +
+        Math.sin(time * 0.18) * 0.035,
+      MathUtils.degToRad(settings.bottleRotationZ ?? 0),
+    );
   });
 
   if (!settings.showBottle) {

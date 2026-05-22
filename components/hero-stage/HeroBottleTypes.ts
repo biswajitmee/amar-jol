@@ -5,4 +5,7 @@ export type HeroBottleSettings = {
   bottleZ: number;
   bottleScale: number;
   bottleOpacity: number;
+  bottleRotationX?: number;
+  bottleRotationY?: number;
+  bottleRotationZ?: number;
 };
