@@ -1,0 +1,158 @@
+"use client";
+
+import { useControls } from "leva";
+
+export const WATER_PRO_PRESETS = {
+  softHero: {
+    waveStrength: 0.72,
+    waveSpeed: 1,
+    waveScale: 1,
+    opacity: 0.58,
+    rippleStrength: 0.55,
+    rippleDamping: 0.985,
+    rippleRadius: 0.16,
+    rippleResolution: 128,
+    foamStrength: 0.82,
+    foamDecay: 0.965,
+    foamColor: "#f4fbf1",
+    fresnelPower: 2.6,
+    reflectionStrength: 0.62,
+    underwaterEnabled: true,
+    underwaterFogDensity: 0.055,
+    causticsStrength: 0.42,
+  },
+  clearSmall: {
+    waveStrength: 0.42,
+    waveSpeed: 0.86,
+    waveScale: 1.15,
+    opacity: 0.48,
+    rippleStrength: 0.35,
+    rippleDamping: 0.988,
+    rippleRadius: 0.14,
+    rippleResolution: 128,
+    foamStrength: 0.24,
+    foamDecay: 0.972,
+    foamColor: "#eef8f2",
+    fresnelPower: 3.2,
+    reflectionStrength: 0.48,
+    underwaterEnabled: true,
+    underwaterFogDensity: 0.042,
+    causticsStrength: 0.34,
+  },
+  impactLab: {
+    waveStrength: 0.9,
+    waveSpeed: 1.18,
+    waveScale: 0.92,
+    opacity: 0.66,
+    rippleStrength: 0.85,
+    rippleDamping: 0.978,
+    rippleRadius: 0.2,
+    rippleResolution: 192,
+    foamStrength: 0.92,
+    foamDecay: 0.955,
+    foamColor: "#fbfff4",
+    fresnelPower: 2.1,
+    reflectionStrength: 0.72,
+    underwaterEnabled: true,
+    underwaterFogDensity: 0.068,
+    causticsStrength: 0.54,
+  },
+};
+
+export function useWaterDebugPanel(defaults) {
+  return useControls(
+    "WaterPro",
+    {
+      preset: {
+        value: "softHero",
+        options: Object.keys(WATER_PRO_PRESETS),
+      },
+      waveStrength: {
+        value: defaults.waveStrength,
+        min: 0,
+        max: 1.5,
+        step: 0.01,
+      },
+      waveSpeed: {
+        value: defaults.waveSpeed,
+        min: 0,
+        max: 2.2,
+        step: 0.01,
+      },
+      waveScale: {
+        value: defaults.waveScale,
+        min: 0.35,
+        max: 2.4,
+        step: 0.01,
+      },
+      opacity: {
+        value: defaults.opacity,
+        min: 0.12,
+        max: 1,
+        step: 0.01,
+      },
+      rippleStrength: {
+        value: defaults.rippleStrength,
+        min: 0,
+        max: 1.4,
+        step: 0.01,
+      },
+      rippleDamping: {
+        value: defaults.rippleDamping,
+        min: 0.94,
+        max: 0.999,
+        step: 0.001,
+      },
+      rippleRadius: {
+        value: defaults.rippleRadius,
+        min: 0.04,
+        max: 0.5,
+        step: 0.005,
+      },
+      rippleResolution: {
+        value: defaults.rippleResolution,
+        options: [64, 128, 192, 256, 384],
+      },
+      foamStrength: {
+        value: defaults.foamStrength,
+        min: 0,
+        max: 1.4,
+        step: 0.01,
+      },
+      foamDecay: {
+        value: defaults.foamDecay,
+        min: 0.9,
+        max: 0.995,
+        step: 0.001,
+      },
+      foamColor: defaults.foamColor,
+      fresnelPower: {
+        value: defaults.fresnelPower,
+        min: 0.8,
+        max: 6,
+        step: 0.05,
+      },
+      reflectionStrength: {
+        value: defaults.reflectionStrength,
+        min: 0,
+        max: 1.4,
+        step: 0.01,
+      },
+      underwaterEnabled: defaults.underwaterEnabled,
+      underwaterFogDensity: {
+        value: defaults.underwaterFogDensity,
+        min: 0.005,
+        max: 0.12,
+        step: 0.001,
+      },
+      causticsStrength: {
+        value: defaults.causticsStrength,
+        min: 0,
+        max: 1,
+        step: 0.01,
+      },
+      showDemoLeaves: defaults.showDemoLeaves,
+    },
+    { collapsed: true, order: 1 },
+  );
+}
