@@ -37,14 +37,14 @@ type CameraValues = {
 
 const cameraConfig = {
   position: {
-    x: types.number(0, { range: [-100, 100] }),
-    y: types.number(1.92, { range: [-100, 100] }),
-    z: types.number(8.6, { range: [-100, 100] }),
+    x: types.number(0),
+    y: types.number(1.92),
+    z: types.number(8.6),
   },
   rotation: {
-    x: types.number(8.5, { range: [-100, 100] }),
-    y: types.number(0, { range: [-100, 100] }),
-    z: types.number(0, { range: [-100, 100] }),
+    x: types.number(8.5),
+    y: types.number(0),
+    z: types.number(0),
   },
   fov: types.number(45, { range: [24, 80] }),
 };

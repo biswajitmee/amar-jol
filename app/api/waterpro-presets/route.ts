@@ -13,6 +13,7 @@ const presetFilePath = path.join(
 const presetValueKeys = new Set([
   "preset",
   "waterPosition",
+  "waterRotation",
   "waterScale",
   "waterSize",
   "waveStrength",

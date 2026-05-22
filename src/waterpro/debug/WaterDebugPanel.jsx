@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { button, folder, useControls } from "leva";
 
 export const DEFAULT_WATER_PRO_PRESET = "organimoSoft";
@@ -9,6 +9,7 @@ const WATER_PRESET_API = "/api/waterpro-presets";
 const LEVA_PRESET_VALUE_KEYS = [
   "preset",
   "waterPosition",
+  "waterRotation",
   "waterScale",
   "waterSize",
   "waveStrength",
@@ -114,16 +115,123 @@ function toVector3Control(value, fallback = [0, 0, 0]) {
   };
 }
 
-function toScalarScale(value, fallback = 1) {
+function toDegreesVector3Control(value, fallback = [0, 0, 0]) {
+  const vector = toVector3Control(value, fallback);
+  const radiansToDegrees = 180 / Math.PI;
+
+  return {
+    x: vector.x * radiansToDegrees,
+    y: vector.y * radiansToDegrees,
+    z: vector.z * radiansToDegrees,
+  };
+}
+
+function getWaterPositionValues(values, fallback = [0, 0, 0]) {
+  const fallbackPosition = toVector3Control(fallback);
+  const vectorPosition = toVector3Control(
+    values?.waterPosition,
+    [fallbackPosition.x, fallbackPosition.y, fallbackPosition.z],
+  );
+
+  return {
+    x: values?.waterPositionX ?? vectorPosition.x,
+    y: values?.waterPositionY ?? vectorPosition.y,
+    z: values?.waterPositionZ ?? vectorPosition.z,
+  };
+}
+
+function getWaterRotationValues(values, fallback = [0, 0, 0]) {
+  const fallbackRotation = toVector3Control(fallback);
+  const vectorRotation = toVector3Control(
+    values?.waterRotation,
+    [fallbackRotation.x, fallbackRotation.y, fallbackRotation.z],
+  );
+
+  return {
+    x: values?.waterRotationX ?? vectorRotation.x,
+    y: values?.waterRotationY ?? vectorRotation.y,
+    z: values?.waterRotationZ ?? vectorRotation.z,
+  };
+}
+
+function toScale3Control(value, fallback = 1) {
+  const fallbackScale =
+    typeof fallback === "number"
+      ? { x: fallback, y: fallback, z: fallback }
+      : toVector3Control(fallback, [1, 1, 1]);
+
   if (typeof value === "number") {
-    return value;
+    return {
+      x: value,
+      y: value,
+      z: value,
+    };
   }
 
-  if (value?.x !== undefined) {
-    return value.x;
-  }
+  return {
+    x: value?.x ?? value?.[0] ?? fallbackScale.x,
+    y: value?.y ?? value?.[1] ?? fallbackScale.y,
+    z: value?.z ?? value?.[2] ?? fallbackScale.z,
+  };
+}
 
-  return value?.[0] ?? fallback;
+function getWaterScaleValues(values, fallback = 1) {
+  const fallbackScale = toScale3Control(fallback);
+  const vectorScale = toScale3Control(values?.waterScale, [
+    fallbackScale.x,
+    fallbackScale.y,
+    fallbackScale.z,
+  ]);
+
+  return {
+    x: values?.waterScaleX ?? vectorScale.x,
+    y: values?.waterScaleY ?? vectorScale.y,
+    z: values?.waterScaleZ ?? vectorScale.z,
+  };
+}
+
+function toPositionSliderValues(values, fallback = [0, 0, 0]) {
+  const position = getWaterPositionValues(values, fallback);
+
+  return {
+    waterPositionX: position.x,
+    waterPositionY: position.y,
+    waterPositionZ: position.z,
+  };
+}
+
+function toRotationSliderValues(values, fallback = [0, 0, 0]) {
+  const rotation = getWaterRotationValues(values, fallback);
+
+  return {
+    waterRotationX: rotation.x,
+    waterRotationY: rotation.y,
+    waterRotationZ: rotation.z,
+  };
+}
+
+function toScaleSliderValues(values, fallback = 1) {
+  const scale = getWaterScaleValues(values, fallback);
+
+  return {
+    waterScaleX: scale.x,
+    waterScaleY: scale.y,
+    waterScaleZ: scale.z,
+  };
+}
+
+function normalizePanelValues(
+  values,
+  fallbackPosition = [0, 0, 0],
+  fallbackRotation = [0, 0, 0],
+  fallbackScale = 1,
+) {
+  return {
+    ...values,
+    waterPosition: getWaterPositionValues(values, fallbackPosition),
+    waterRotation: getWaterRotationValues(values, fallbackRotation),
+    waterScale: getWaterScaleValues(values, fallbackScale),
+  };
 }
 
 function getPresetValues(presetName) {
@@ -196,23 +304,74 @@ function makePanelSchema(defaults, transformDefaults, presetFileControls) {
     ),
     Transform: folder(
       {
-        waterPosition: {
-          value: transformDefaults.position,
-          label: "Position",
+        waterPositionX: {
+          value: transformDefaults.position.x,
+          label: "Position X",
+          min: -72,
+          max: 72,
           step: 0.01,
         },
-        waterScale: {
-          value: transformDefaults.scale,
-          label: "Scale",
-          min: 0.2,
-          max: 3,
+        waterPositionY: {
+          value: transformDefaults.position.y,
+          label: "Position Y",
+          min: -72,
+          max: 72,
+          step: 0.01,
+        },
+        waterPositionZ: {
+          value: transformDefaults.position.z,
+          label: "Position Z",
+          min: -72,
+          max: 72,
+          step: 0.01,
+        },
+        waterRotationX: {
+          value: transformDefaults.rotation.x,
+          label: "Rotation X",
+          min: -360,
+          max: 360,
+          step: 0.1,
+        },
+        waterRotationY: {
+          value: transformDefaults.rotation.y,
+          label: "Rotation Y",
+          min: -360,
+          max: 360,
+          step: 0.1,
+        },
+        waterRotationZ: {
+          value: transformDefaults.rotation.z,
+          label: "Rotation Z",
+          min: -360,
+          max: 360,
+          step: 0.1,
+        },
+        waterScaleX: {
+          value: transformDefaults.scale.x,
+          label: "Scale X",
+          min: 0.1,
+          max: 8,
+          step: 0.01,
+        },
+        waterScaleY: {
+          value: transformDefaults.scale.y,
+          label: "Scale Y",
+          min: 0.1,
+          max: 8,
+          step: 0.01,
+        },
+        waterScaleZ: {
+          value: transformDefaults.scale.z,
+          label: "Scale Z",
+          min: 0.1,
+          max: 8,
           step: 0.01,
         },
         waterSize: {
           value: transformDefaults.size,
           label: "Plane size",
           min: 0.05,
-          max: 16,
+          max: 48,
           step: 0.01,
         },
       },
@@ -224,35 +383,35 @@ function makePanelSchema(defaults, transformDefaults, presetFileControls) {
           value: presetValues.waveStrength,
           label: "Wave strength",
           min: 0,
-          max: 1.6,
+          max: 16,
           step: 0.01,
         },
         waveSpeed: {
           value: presetValues.waveSpeed,
           label: "Wave speed",
           min: 0,
-          max: 2.4,
+          max: 24,
           step: 0.01,
         },
         waveScale: {
           value: presetValues.waveScale,
           label: "Wave scale",
-          min: 0.35,
-          max: 2.4,
+          min: -10.00,
+          max: 24,
           step: 0.01,
         },
         reflectionStrength: {
           value: presetValues.reflectionStrength,
           label: "Reflection",
           min: 0,
-          max: 1.4,
+          max: 14,
           step: 0.01,
         },
         fresnelPower: {
           value: presetValues.fresnelPower,
           label: "Fresnel",
           min: 0.8,
-          max: 6,
+          max: 60,
           step: 0.05,
         },
       },
@@ -346,7 +505,8 @@ export function useWaterDebugPanel(defaults, transform = {}) {
   if (!initialTransformRef.current) {
     initialTransformRef.current = {
       position: toVector3Control(transform.position, [0, 0, 0]),
-      scale: toScalarScale(transform.scale, 1),
+      rotation: toDegreesVector3Control(transform.rotation, [0, 0, 0]),
+      scale: toScale3Control(transform.scale, 1),
       size: toVector3Control(defaults.waterSize, [
         defaults.width ?? 4.2,
         1,
@@ -426,8 +586,25 @@ export function useWaterDebugPanel(defaults, transform = {}) {
         }, 0);
       }
 
+      const savedPanelValues = { ...savedPreset };
+      delete savedPanelValues.waterPosition;
+      delete savedPanelValues.waterRotation;
+      delete savedPanelValues.waterScale;
+
       setRef.current?.({
-        ...savedPreset,
+        ...savedPanelValues,
+        ...toPositionSliderValues(
+          savedPreset,
+          initialTransformRef.current?.position,
+        ),
+        ...toRotationSliderValues(
+          savedPreset,
+          initialTransformRef.current?.rotation,
+        ),
+        ...toScaleSliderValues(
+          savedPreset,
+          initialTransformRef.current?.scale,
+        ),
         savePresetName: name,
         loadPresetName: name,
         presetFileStatus: `Loaded ${name}`,
@@ -448,7 +625,17 @@ export function useWaterDebugPanel(defaults, transform = {}) {
     [defaults, loadSavedPreset, preset, saveCurrentPreset],
   );
   const previousPresetRef = useRef(values.preset);
-  valuesRef.current = values;
+  const normalizedValues = useMemo(
+    () =>
+      normalizePanelValues(
+        values,
+        initialTransformRef.current.position,
+        initialTransformRef.current.rotation,
+        initialTransformRef.current.scale,
+      ),
+    [values],
+  );
+  valuesRef.current = normalizedValues;
   setRef.current = set;
 
   useEffect(() => {
@@ -466,5 +653,5 @@ export function useWaterDebugPanel(defaults, transform = {}) {
     set(getPresetControlValues(values.preset));
   }, [set, values.preset]);
 
-  return values;
+  return normalizedValues;
 }

@@ -107,6 +107,40 @@ function toVectorArray(value, fallback = [0, 0, 0]) {
   ];
 }
 
+function toScaleArray(value, fallback = 1) {
+  const fallbackVector =
+    typeof fallback === "number"
+      ? [fallback, fallback, fallback]
+      : fallback instanceof Vector3
+        ? [fallback.x, fallback.y, fallback.z]
+        : fallback;
+
+  if (typeof value === "number") {
+    return [value, value, value];
+  }
+
+  return [
+    value?.x ?? value?.[0] ?? fallbackVector?.[0] ?? 1,
+    value?.y ?? value?.[1] ?? fallbackVector?.[1] ?? 1,
+    value?.z ?? value?.[2] ?? fallbackVector?.[2] ?? 1,
+  ];
+}
+
+function toRadiansArray(value, fallback = [0, 0, 0]) {
+  if (value === undefined || value === null) {
+    return toVectorArray(fallback, [0, 0, 0]);
+  }
+
+  const degrees = toVectorArray(value, [0, 0, 0]);
+  const degreesToRadians = Math.PI / 180;
+
+  return [
+    degrees[0] * degreesToRadians,
+    degrees[1] * degreesToRadians,
+    degrees[2] * degreesToRadians,
+  ];
+}
+
 function normalizeWaterSize(value, defaults) {
   const width = value?.x ?? value?.[0] ?? defaults.width ?? 4.2;
   const vertical = value?.y ?? value?.[1] ?? 1;
@@ -189,19 +223,24 @@ export default function WaterPro({
   onUnderwaterChange,
   ...overrides
 }) {
-  const panelValues = useWaterDebugPanel(defaultSettings, { position, scale });
+  const panelValues = useWaterDebugPanel(defaultSettings, {
+    position,
+    rotation,
+    scale,
+  });
   const selectedPreset =
+    (debug ? panelValues.preset : null) ??
+    overrides.preset ??
     theatreSettings?.preset ??
-    (debug ? panelValues.preset : overrides.preset) ??
     defaultSettings.preset;
   const presetValues =
     WATER_PRO_PRESETS[selectedPreset] ?? WATER_PRO_PRESETS[DEFAULT_WATER_PRO_PRESET];
   const rawSettings = {
     ...defaultSettings,
     ...presetValues,
-    ...(debug ? panelValues : {}),
     ...(theatreSettings ?? {}),
     ...overrides,
+    ...(debug ? panelValues : {}),
   };
   const waterSize = normalizeWaterSize(rawSettings.waterSize, rawSettings);
   const settings = {
@@ -215,8 +254,12 @@ export default function WaterPro({
     debug && usePanelTransform
       ? toVectorArray(panelValues.waterPosition, position)
       : position;
+  const waterRotation =
+    debug && usePanelTransform
+      ? toRadiansArray(panelValues.waterRotation, rotation)
+      : rotation;
   const waterScale =
-    debug && usePanelTransform ? panelValues.waterScale ?? scale : scale;
+    debug && usePanelTransform ? toScaleArray(panelValues.waterScale, scale) : scale;
 
   const materialRef = useRef(null);
   const groupRef = useRef(null);
@@ -319,7 +362,7 @@ export default function WaterPro({
   }, [emptyTexture, material]);
 
   return (
-    <group ref={groupRef} position={waterPosition} rotation={rotation} scale={waterScale}>
+    <group ref={groupRef} position={waterPosition} rotation={waterRotation} scale={waterScale}>
       <mesh renderOrder={22} frustumCulled={false}>
         <planeGeometry args={[settings.width, settings.depth, settings.segments, settings.segments]} />
         <primitive

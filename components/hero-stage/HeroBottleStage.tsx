@@ -27,14 +27,14 @@ type HeroBottleStageProps = {
 const bottleTheatreConfig = {
   showBottle: types.boolean(true),
   position: {
-    x: types.number(0, { range: [-8, 8] }),
-    y: types.number(1.08, { range: [-0.6, 4] }),
-    z: types.number(-3.8, { range: [-24, 12] }),
+    x: types.number(0),
+    y: types.number(1.08),
+    z: types.number(-3.8),
   },
   rotation: {
-    x: types.number(0, { range: [-90, 90] }),
-    y: types.number(0, { range: [-180, 180] }),
-    z: types.number(0, { range: [-90, 90] }),
+    x: types.number(0),
+    y: types.number(0),
+    z: types.number(0),
   },
   scale: types.number(1.08, { range: [0.35, 2.4] }),
   opacity: types.number(0.72, { range: [0.2, 1] }),

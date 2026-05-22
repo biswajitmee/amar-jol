@@ -96,7 +96,8 @@ type WaterPresetName = keyof typeof waterPresets;
 type WaterDebugValues = Partial<{
   preset: WaterPresetName;
   waterPosition: Vector3Values | [number, number, number];
-  waterScale: number;
+  waterRotation: Vector3Values | [number, number, number];
+  waterScale: number | Vector3Values | [number, number, number];
   waterSize: Vector3Values | [number, number, number];
   waveStrength: number;
   waveSpeed: number;
@@ -233,6 +234,18 @@ function toVector3(value: unknown, fallback: Vector3Values): Vector3Values {
   };
 }
 
+function toScaleVector(value: unknown, fallback: Vector3Values): Vector3Values {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return {
+      x: value,
+      y: value,
+      z: value,
+    };
+  }
+
+  return toVector3(value, fallback);
+}
+
 function vectorToArray(value: Vector3Values): [number, number, number] {
   return [value.x, value.y, value.z];
 }
@@ -248,33 +261,33 @@ function rotationToRadians(value: Vector3Values): [number, number, number] {
 const waterTheatreConfig = {
   preset: types.stringLiteral(defaultPreset, presetLabels),
   position: {
-    x: types.number(defaultWaterValues.position.x, { range: [-12, 12] }),
-    y: types.number(defaultWaterValues.position.y, { range: [-4, 6] }),
-    z: types.number(defaultWaterValues.position.z, { range: [-36, 36] }),
+    x: types.number(defaultWaterValues.position.x),
+    y: types.number(defaultWaterValues.position.y),
+    z: types.number(defaultWaterValues.position.z),
   },
   rotation: {
-    x: types.number(defaultWaterValues.rotation.x, { range: [-90, 90] }),
-    y: types.number(defaultWaterValues.rotation.y, { range: [-180, 180] }),
-    z: types.number(defaultWaterValues.rotation.z, { range: [-90, 90] }),
+    x: types.number(defaultWaterValues.rotation.x),
+    y: types.number(defaultWaterValues.rotation.y),
+    z: types.number(defaultWaterValues.rotation.z),
   },
   scale: {
-    x: types.number(defaultWaterValues.scale.x, { range: [0.2, 3] }),
-    y: types.number(defaultWaterValues.scale.y, { range: [0.2, 3] }),
-    z: types.number(defaultWaterValues.scale.z, { range: [0.2, 3] }),
+    x: types.number(defaultWaterValues.scale.x, { range: [0.1, 8] }),
+    y: types.number(defaultWaterValues.scale.y, { range: [0.1, 8] }),
+    z: types.number(defaultWaterValues.scale.z, { range: [0.1, 8] }),
   },
   waterSize: {
-    x: types.number(defaultWaterValues.waterSize.x, { range: [0.05, 16] }),
-    y: types.number(defaultWaterValues.waterSize.y, { range: [0.05, 6] }),
-    z: types.number(defaultWaterValues.waterSize.z, { range: [0.05, 16] }),
+    x: types.number(defaultWaterValues.waterSize.x, { range: [0.05, 48] }),
+    y: types.number(defaultWaterValues.waterSize.y, { range: [0.05, 24] }),
+    z: types.number(defaultWaterValues.waterSize.z, { range: [0.05, 48] }),
   },
   waveStrength: types.number(waterPresets.organimoSoft.waveStrength, {
-    range: [0, 1.6],
+    range: [0, 16],
   }),
   waveSpeed: types.number(waterPresets.organimoSoft.waveSpeed, {
-    range: [0, 2.4],
+    range: [0, 24],
   }),
   waveScale: types.number(waterPresets.organimoSoft.waveScale, {
-    range: [0.35, 2.4],
+    range: [0.35, 24],
   }),
   waterColor: types.rgba(hexToRgba(waterPresets.organimoSoft.waterColor)),
   deepColor: types.rgba(hexToRgba(waterPresets.organimoSoft.deepColor)),
@@ -288,10 +301,10 @@ const waterTheatreConfig = {
     range: [0.94, 0.999],
   }),
   reflectionStrength: types.number(waterPresets.organimoSoft.reflectionStrength, {
-    range: [0, 1.4],
+    range: [0, 14],
   }),
   fresnelPower: types.number(waterPresets.organimoSoft.fresnelPower, {
-    range: [0.8, 6],
+    range: [0.8, 60],
   }),
   underwaterEnabled: types.boolean(defaultWaterValues.underwaterEnabled),
   underwaterFogColor: types.rgba(
@@ -326,13 +339,13 @@ function getTheatreWater(theatreSheet: ISheet) {
 function toWaterInitialValue(values: WaterDebugValues | null) {
   const presetName = toPresetName(values?.preset);
   const preset = waterPresets[presetName];
-  const waterScale = toNumber(values?.waterScale, 1);
+  const waterScale = toScaleVector(values?.waterScale, defaultWaterValues.scale);
 
   return {
     preset: presetName,
     position: toVector3(values?.waterPosition, defaultWaterValues.position),
-    rotation: defaultWaterValues.rotation,
-    scale: { x: waterScale, y: waterScale, z: waterScale },
+    rotation: toVector3(values?.waterRotation, defaultWaterValues.rotation),
+    scale: waterScale,
     waterSize: toVector3(values?.waterSize, defaultWaterValues.waterSize),
     waveStrength: toNumber(values?.waveStrength, preset.waveStrength),
     waveSpeed: toNumber(values?.waveSpeed, preset.waveSpeed),
@@ -448,7 +461,7 @@ export default function HeroWaterStage({ theatreSheet }: HeroWaterStageProps) {
       rotation={rotationToRadians(theatreValues.rotation)}
       scale={vectorToArray(theatreValues.scale)}
       theatreSettings={waterSettings}
-      usePanelTransform={false}
+      usePanelTransform
       onDebugSettingsChange={handleDebugSettingsChange}
     />
   );

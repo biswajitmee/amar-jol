@@ -1,31 +1,40 @@
 {
   "presets": {
     "hero-water-custom": {
-      "preset": "cinematicProductHero",
+      "preset": "organimoSoft",
       "waterPosition": {
-        "x": 0,
-        "y": 0,
-        "z": 0
+        "x": -4.93875176658325,
+        "y": 6.914896074721051,
+        "z": -27.72
       },
-      "waterScale": 2.81,
+      "waterRotation": {
+        "x": 40.58898962844088,
+        "y": -1.0658141036401504e-14,
+        "z": 3.417991781188466
+      },
+      "waterScale": {
+        "x": 8,
+        "y": 3.62,
+        "z": 6.39
+      },
       "waterSize": {
-        "x": 16,
-        "y": 5,
-        "z": 16
+        "x": 4.2,
+        "y": 1,
+        "z": 2.35
       },
-      "waveStrength": 0.22999999999999998,
-      "waveSpeed": 0.88,
-      "waveScale": 2.08,
-      "rippleStrength": 1.3800000000000001,
-      "rippleDamping": 0.991,
-      "foamStrength": 1.06,
-      "reflectionStrength": 1.1400000000000001,
-      "fresnelPower": 6,
+      "waveStrength": 2.46,
+      "waveSpeed": 1.88,
+      "waveScale": 0.2,
+      "rippleStrength": 1.09,
+      "rippleDamping": 0.948,
+      "foamStrength": 0.039999999999999925,
+      "reflectionStrength": 0.04999999999999993,
+      "fresnelPower": 13.200000000000001,
       "underwaterEnabled": true,
-      "underwaterFogColor": "#0f5870",
-      "underwaterFogDensity": 0.05,
-      "causticsStrength": 0.46,
-      "showRippleTexture": true,
+      "underwaterFogColor": "#0a5665",
+      "underwaterFogDensity": 0.055,
+      "causticsStrength": 0.42,
+      "showRippleTexture": false,
       "showFoamTexture": false,
       "showBuoyancySamplePoints": false
     }
