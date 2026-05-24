@@ -13,7 +13,9 @@ import {
   PerspectiveCamera,
   SRGBColorSpace,
 } from "three";
+import HeroLightingRig from "@/components/hero-stage/HeroLightingRig";
 import HeroStageWorld from "@/components/hero-stage/HeroStageWorld";
+import HeroLevaPresetPanel from "@/src/waterpro/debug/HeroLevaPresetPanel.jsx";
 import theaterState from "@/theaterstate.json";
 
 const project = getProject("Water Hero Screen", {
@@ -145,18 +147,11 @@ function RendererMood() {
 function Scene() {
   return (
     <>
-      <color attach="background" args={["#f1c9af"]} />
       <RendererMood />
-      <ambientLight intensity={1.08} color="#fff1dc" />
-      <directionalLight
-        position={[7.8, 6.2, 4.8]}
-        intensity={4.4}
-        color="#ffe1b8"
-      />
-      <pointLight position={[-6, -2.2, -8]} intensity={1.2} color="#f3d0b4" />
-      <pointLight position={[8, 1.2, -7]} intensity={2.0} color="#ffd2a3" />
+      <HeroLightingRig />
       <TheatreCameraRig theatreSheet={sheet} />
       <HeroStageWorld theatreSheet={sheet} />
+      {process.env.NODE_ENV === "development" ? <HeroLevaPresetPanel /> : null}
     </>
   );
 }

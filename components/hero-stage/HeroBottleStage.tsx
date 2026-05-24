@@ -36,7 +36,7 @@ const bottleTheatreConfig = {
     y: types.number(0),
     z: types.number(0),
   },
-  scale: types.number(1.08, { range: [0.35, 2.4] }),
+  scale: types.number(1.08, { range: [0.35, 25] }),
   opacity: types.number(0.72, { range: [0.2, 1] }),
 };
 

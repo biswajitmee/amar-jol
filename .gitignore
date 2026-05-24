@@ -24,3 +24,6 @@ build
 coverage
 .nyc_output
 .cache
+
+.playwright-mcp/
+waterpro-*.png

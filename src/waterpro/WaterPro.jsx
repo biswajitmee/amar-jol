@@ -6,6 +6,7 @@ import {
   Color,
   DataTexture,
   DoubleSide,
+  Matrix4,
   RGBAFormat,
   RepeatWrapping,
   SRGBColorSpace,
@@ -20,6 +21,7 @@ import {
   useWaterDebugPanel,
 } from "./debug/WaterDebugPanel";
 import FallingLeaf from "./objects/FallingLeaf";
+import PlanarReflectionCapture from "./reflection/PlanarReflectionCapture";
 import waterFragmentShader from "./shaders/waterPro.fragment.glsl";
 import waterVertexShader from "./shaders/waterPro.vertex.glsl";
 import { useRippleFBO } from "./sim/useRippleFBO";
@@ -68,6 +70,18 @@ const defaultSettings = {
   showRippleTexture: false,
   showFoamTexture: false,
   showBuoyancySamplePoints: false,
+  planarReflectionEnabled: true,
+  planarReflectionStrength: 0.45,
+  planarReflectionDistortion: 0.012,
+  planarReflectionTint: "#ffffff",
+  planarReflectionFade: 0.7,
+  showReflectionTextureDebug: false,
+  reflectionDebugRawTexture: false,
+  reflectionDebugFullStrength: false,
+  reflectionDebugNoDistortion: false,
+  reflectionDebugFixedBlend: false,
+  planarReflectionTargetScale: 0.5,
+  planarReflectionClipBias: 0,
   waves: [
     [1, 0.18, 0.082, 2.7, 0],
     [0.32, 1, 0.056, 1.85, 1.7],
@@ -212,24 +226,20 @@ function WaterTextureDebugPreview({
   );
 }
 
-export default function WaterPro({
+function WaterProScene({
   position = [0, 0, 0],
   rotation = [0, 0, 0],
   scale = 1,
-  debug = true,
+  debug = false,
+  panelValues = null,
   theatreSettings = null,
   usePanelTransform = true,
   onDebugSettingsChange,
   onUnderwaterChange,
   ...overrides
 }) {
-  const panelValues = useWaterDebugPanel(defaultSettings, {
-    position,
-    rotation,
-    scale,
-  });
   const selectedPreset =
-    (debug ? panelValues.preset : null) ??
+    (debug && panelValues ? panelValues.preset : null) ??
     overrides.preset ??
     theatreSettings?.preset ??
     defaultSettings.preset;
@@ -240,7 +250,7 @@ export default function WaterPro({
     ...presetValues,
     ...(theatreSettings ?? {}),
     ...overrides,
-    ...(debug ? panelValues : {}),
+    ...(debug && panelValues ? panelValues : {}),
   };
   const waterSize = normalizeWaterSize(rawSettings.waterSize, rawSettings);
   const settings = {
@@ -251,18 +261,21 @@ export default function WaterPro({
     waveStrength: (rawSettings.waveStrength ?? defaultSettings.waveStrength) * waterSize.y,
   };
   const waterPosition =
-    debug && usePanelTransform
+    debug && usePanelTransform && panelValues
       ? toVectorArray(panelValues.waterPosition, position)
       : position;
   const waterRotation =
-    debug && usePanelTransform
+    debug && usePanelTransform && panelValues
       ? toRadiansArray(panelValues.waterRotation, rotation)
       : rotation;
   const waterScale =
-    debug && usePanelTransform ? toScaleArray(panelValues.waterScale, scale) : scale;
+    debug && usePanelTransform && panelValues
+      ? toScaleArray(panelValues.waterScale, scale)
+      : scale;
 
   const materialRef = useRef(null);
   const groupRef = useRef(null);
+  const waterMeshRef = useRef(null);
   const lastDebugSettingsKeyRef = useRef("");
   const emptyTexture = useMemo(() => makeEmptyTexture(), []);
   const simulation = useWaterSimulation(settings);
@@ -298,6 +311,16 @@ export default function WaterPro({
       uFoamDecay: { value: settings.foamDecay },
       uRippleTexture: { value: emptyTexture },
       uFoamTexture: { value: emptyTexture },
+      uPlanarReflectionTexture: { value: emptyTexture },
+      uPlanarReflectionMatrix: { value: new Matrix4() },
+      uPlanarReflectionEnabled: { value: settings.planarReflectionEnabled ? 1 : 0 },
+      uPlanarReflectionStrength: { value: settings.planarReflectionStrength },
+      uPlanarReflectionDistortion: { value: settings.planarReflectionDistortion },
+      uPlanarReflectionTint: { value: new Color(settings.planarReflectionTint) },
+      uPlanarReflectionFade: { value: settings.planarReflectionFade },
+      uPlanarReflectionDebugFullStrength: { value: settings.reflectionDebugFullStrength ? 1 : 0 },
+      uPlanarReflectionDebugNoDistortion: { value: settings.reflectionDebugNoDistortion ? 1 : 0 },
+      uPlanarReflectionDebugFixedBlend: { value: settings.reflectionDebugFixedBlend ? 1 : 0 },
     }),
     [emptyTexture],
   );
@@ -339,10 +362,21 @@ export default function WaterPro({
     activeMaterial.uniforms.uFoamDecay.value = settings.foamDecay;
     activeMaterial.uniforms.uRippleTexture.value = rippleFBO.rippleTexture ?? emptyTexture;
     activeMaterial.uniforms.uFoamTexture.value = rippleFBO.foamTexture ?? emptyTexture;
+    activeMaterial.uniforms.uPlanarReflectionEnabled.value = settings.planarReflectionEnabled ? 1 : 0;
+    activeMaterial.uniforms.uPlanarReflectionStrength.value = settings.planarReflectionStrength;
+    activeMaterial.uniforms.uPlanarReflectionDistortion.value = settings.planarReflectionDistortion;
+    activeMaterial.uniforms.uPlanarReflectionTint.value.set(settings.planarReflectionTint);
+    activeMaterial.uniforms.uPlanarReflectionFade.value = settings.planarReflectionFade;
+    activeMaterial.uniforms.uPlanarReflectionDebugFullStrength.value =
+      settings.reflectionDebugFullStrength ? 1 : 0;
+    activeMaterial.uniforms.uPlanarReflectionDebugNoDistortion.value =
+      settings.reflectionDebugNoDistortion ? 1 : 0;
+    activeMaterial.uniforms.uPlanarReflectionDebugFixedBlend.value =
+      settings.reflectionDebugFixedBlend ? 1 : 0;
   });
 
   useEffect(() => {
-    if (debug && onDebugSettingsChange) {
+    if (debug && panelValues && onDebugSettingsChange) {
       const nextKey = JSON.stringify(panelValues);
 
       if (nextKey === lastDebugSettingsKeyRef.current) {
@@ -362,71 +396,116 @@ export default function WaterPro({
   }, [emptyTexture, material]);
 
   return (
-    <group ref={groupRef} position={waterPosition} rotation={waterRotation} scale={waterScale}>
-      <mesh renderOrder={22} frustumCulled={false}>
-        <planeGeometry args={[settings.width, settings.depth, settings.segments, settings.segments]} />
-        <primitive
-          ref={materialRef}
-          attach="material"
-          object={material}
+    <>
+      <group ref={groupRef} position={waterPosition} rotation={waterRotation} scale={waterScale}>
+        <mesh ref={waterMeshRef} renderOrder={22} frustumCulled={false}>
+          <planeGeometry args={[settings.width, settings.depth, settings.segments, settings.segments]} />
+          <primitive
+            ref={materialRef}
+            attach="material"
+            object={material}
+          />
+        </mesh>
+        <WaterTextureDebugPreview
+          rippleTexture={rippleFBO.rippleTexture}
+          foamTexture={rippleFBO.foamTexture}
+          showRippleTexture={settings.showRippleTexture}
+          showFoamTexture={settings.showFoamTexture}
+          emptyTexture={emptyTexture}
+          width={settings.width}
+          depth={settings.depth}
         />
-      </mesh>
-      <WaterTextureDebugPreview
-        rippleTexture={rippleFBO.rippleTexture}
-        foamTexture={rippleFBO.foamTexture}
-        showRippleTexture={settings.showRippleTexture}
-        showFoamTexture={settings.showFoamTexture}
-        emptyTexture={emptyTexture}
-        width={settings.width}
-        depth={settings.depth}
-      />
-      <UnderwaterFX
-        waterGroupRef={groupRef}
-        waterMaterialRef={materialRef}
-        simulation={simulation}
-        sampler={simulation.sampler}
-        waterParams={settings}
-        width={settings.width}
-        depth={settings.depth}
-        enabled={settings.underwaterEnabled}
-        onUnderwaterChange={onUnderwaterChange}
-      />
+        <UnderwaterFX
+          waterGroupRef={groupRef}
+          waterMaterialRef={materialRef}
+          simulation={simulation}
+          sampler={simulation.sampler}
+          waterParams={settings}
+          width={settings.width}
+          depth={settings.depth}
+          enabled={settings.underwaterEnabled}
+          onUnderwaterChange={onUnderwaterChange}
+        />
 
-      {settings.showDemoLeaves ? (
-        <>
-          <FallingLeaf
-            simulation={simulation}
-            sampler={simulation.sampler}
-            waterParams={settings}
-            startPosition={[-0.86, 1.02, -0.24]}
-            scale={0.92}
-            fallSpeed={0.34}
-            windStrength={0.065}
-            buoyancy={1.05}
-            sinkDelay={5.2}
-            sinkSpeed={0.055}
-            impactStrength={0.34}
-            impactRadius={settings.rippleRadius}
-            debug={settings.showBuoyancySamplePoints}
-          />
-          <FallingLeaf
-            simulation={simulation}
-            sampler={simulation.sampler}
-            waterParams={settings}
-            startPosition={[0.62, 1.28, 0.28]}
-            scale={0.72}
-            fallSpeed={0.3}
-            windStrength={0.09}
-            buoyancy={0.92}
-            sinkDelay={6.4}
-            sinkSpeed={0.045}
-            impactStrength={0.27}
-            impactRadius={settings.rippleRadius * 0.82}
-            color="#c06f54"
-            debug={settings.showBuoyancySamplePoints}
-          />
-        </>
-      ) : null}
-    </group>
+        {settings.showDemoLeaves ? (
+          <>
+            <FallingLeaf
+              simulation={simulation}
+              sampler={simulation.sampler}
+              waterParams={settings}
+              startPosition={[-0.86, 1.02, -0.24]}
+              scale={0.92}
+              fallSpeed={0.34}
+              windStrength={0.065}
+              buoyancy={1.05}
+              sinkDelay={5.2}
+              sinkSpeed={0.055}
+              impactStrength={0.34}
+              impactRadius={settings.rippleRadius}
+              debug={settings.showBuoyancySamplePoints}
+            />
+            <FallingLeaf
+              simulation={simulation}
+              sampler={simulation.sampler}
+              waterParams={settings}
+              startPosition={[0.62, 1.28, 0.28]}
+              scale={0.72}
+              fallSpeed={0.3}
+              windStrength={0.09}
+              buoyancy={0.92}
+              sinkDelay={6.4}
+              sinkSpeed={0.045}
+              impactStrength={0.27}
+              impactRadius={settings.rippleRadius * 0.82}
+              color="#c06f54"
+              debug={settings.showBuoyancySamplePoints}
+            />
+          </>
+        ) : null}
+      </group>
+      <PlanarReflectionCapture
+        waterMeshRef={waterMeshRef}
+        waterMaterialRef={materialRef}
+        fallbackTexture={emptyTexture}
+        enabled={
+          settings.planarReflectionEnabled ||
+          settings.showReflectionTextureDebug ||
+          settings.reflectionDebugRawTexture
+        }
+        planarReflectionEnabled={settings.planarReflectionEnabled}
+        planarReflectionStrength={settings.planarReflectionStrength}
+        planarReflectionDistortion={settings.planarReflectionDistortion}
+        planarReflectionTint={settings.planarReflectionTint}
+        planarReflectionFade={settings.planarReflectionFade}
+        showDebugPreview={
+          settings.showReflectionTextureDebug || settings.reflectionDebugRawTexture
+        }
+        targetScale={settings.planarReflectionTargetScale}
+        clipBias={settings.planarReflectionClipBias}
+      />
+    </>
   );
+}
+
+function WaterProWithDebug(props) {
+  const {
+    position = [0, 0, 0],
+    rotation = [0, 0, 0],
+    scale = 1,
+  } = props;
+  const panelValues = useWaterDebugPanel(defaultSettings, {
+    position,
+    rotation,
+    scale,
+  });
+
+  return <WaterProScene {...props} debug panelValues={panelValues} />;
+}
+
+export default function WaterPro(props) {
+  if (props.debug === false) {
+    return <WaterProScene {...props} debug={false} panelValues={null} />;
+  }
+
+  return <WaterProWithDebug {...props} />;
 }

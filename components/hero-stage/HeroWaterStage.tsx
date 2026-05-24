@@ -3,6 +3,10 @@
 import { types, type ISheet } from "@theatre/core";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MathUtils } from "three";
+import {
+  getDeploymentWaterPresetValues,
+  isProductionDeployment,
+} from "@/src/waterpro/debug/deploymentLevaPresets";
 import WaterPro from "@/src/waterpro/WaterPro.jsx";
 
 type Vector3Values = {
@@ -29,6 +33,11 @@ const waterPresets = {
     rippleStrength: 0.32,
     reflectionStrength: 0.45,
     fresnelPower: 3.4,
+    planarReflectionEnabled: true,
+    planarReflectionStrength: 0.45,
+    planarReflectionDistortion: 0.012,
+    planarReflectionTint: "#ffffff",
+    planarReflectionFade: 0.7,
     underwaterFogColor: "#1f928f",
     underwaterFogDensity: 0.032,
     causticsStrength: 0.5,
@@ -43,6 +52,11 @@ const waterPresets = {
     rippleStrength: 0.55,
     reflectionStrength: 0.62,
     fresnelPower: 2.6,
+    planarReflectionEnabled: true,
+    planarReflectionStrength: 0.45,
+    planarReflectionDistortion: 0.012,
+    planarReflectionTint: "#ffffff",
+    planarReflectionFade: 0.7,
     underwaterFogColor: "#0a5665",
     underwaterFogDensity: 0.055,
     causticsStrength: 0.42,
@@ -57,6 +71,11 @@ const waterPresets = {
     rippleStrength: 0.95,
     reflectionStrength: 0.86,
     fresnelPower: 1.7,
+    planarReflectionEnabled: true,
+    planarReflectionStrength: 0.42,
+    planarReflectionDistortion: 0.018,
+    planarReflectionTint: "#ffffff",
+    planarReflectionFade: 0.78,
     underwaterFogColor: "#0b3348",
     underwaterFogDensity: 0.09,
     causticsStrength: 0.25,
@@ -71,6 +90,11 @@ const waterPresets = {
     rippleStrength: 0.24,
     reflectionStrength: 0.38,
     fresnelPower: 4.2,
+    planarReflectionEnabled: true,
+    planarReflectionStrength: 0.38,
+    planarReflectionDistortion: 0.01,
+    planarReflectionTint: "#ffffff",
+    planarReflectionFade: 0.66,
     underwaterFogColor: "#49c6b8",
     underwaterFogDensity: 0.024,
     causticsStrength: 0.68,
@@ -85,6 +109,11 @@ const waterPresets = {
     rippleStrength: 0.48,
     reflectionStrength: 0.9,
     fresnelPower: 2.25,
+    planarReflectionEnabled: true,
+    planarReflectionStrength: 0.5,
+    planarReflectionDistortion: 0.012,
+    planarReflectionTint: "#ffffff",
+    planarReflectionFade: 0.72,
     underwaterFogColor: "#0f5870",
     underwaterFogDensity: 0.05,
     causticsStrength: 0.46,
@@ -107,6 +136,13 @@ type WaterDebugValues = Partial<{
   foamStrength: number;
   reflectionStrength: number;
   fresnelPower: number;
+  planarReflectionEnabled: boolean;
+  planarReflectionStrength: number;
+  planarReflectionDistortion: number;
+  planarReflectionTint: string;
+  planarReflectionFade: number;
+  planarReflectionTargetScale: number;
+  planarReflectionClipBias: number;
   underwaterEnabled: boolean;
   underwaterFogColor: string;
   underwaterFogDensity: number;
@@ -114,6 +150,11 @@ type WaterDebugValues = Partial<{
   showRippleTexture: boolean;
   showFoamTexture: boolean;
   showBuoyancySamplePoints: boolean;
+  showReflectionTextureDebug: boolean;
+  reflectionDebugRawTexture: boolean;
+  reflectionDebugFullStrength: boolean;
+  reflectionDebugNoDistortion: boolean;
+  reflectionDebugFixedBlend: boolean;
 }>;
 
 type WaterTheatreValues = {
@@ -132,6 +173,13 @@ type WaterTheatreValues = {
   rippleDamping: number;
   reflectionStrength: number;
   fresnelPower: number;
+  planarReflectionEnabled: boolean;
+  planarReflectionStrength: number;
+  planarReflectionDistortion: number;
+  planarReflectionTint: RgbaValue;
+  planarReflectionFade: number;
+  planarReflectionTargetScale: number;
+  planarReflectionClipBias: number;
   underwaterEnabled: boolean;
   underwaterFogColor: RgbaValue;
   underwaterFogDensity: number;
@@ -139,6 +187,11 @@ type WaterTheatreValues = {
   showRippleTexture: boolean;
   showFoamTexture: boolean;
   showBuoyancySamplePoints: boolean;
+  showReflectionTextureDebug: boolean;
+  reflectionDebugRawTexture: boolean;
+  reflectionDebugFullStrength: boolean;
+  reflectionDebugNoDistortion: boolean;
+  reflectionDebugFixedBlend: boolean;
 };
 
 type HeroWaterStageProps = {
@@ -153,9 +206,16 @@ const defaultWaterValues = {
   waterSize: { x: 4.2, y: 1, z: 2.35 },
   rippleDamping: 0.985,
   underwaterEnabled: true,
+  planarReflectionTargetScale: 0.5,
+  planarReflectionClipBias: 0,
   showRippleTexture: false,
   showFoamTexture: false,
   showBuoyancySamplePoints: false,
+  showReflectionTextureDebug: false,
+  reflectionDebugRawTexture: false,
+  reflectionDebugFullStrength: false,
+  reflectionDebugNoDistortion: false,
+  reflectionDebugFixedBlend: false,
 };
 
 const presetLabels: Record<WaterPresetName, string> = {
@@ -271,9 +331,9 @@ const waterTheatreConfig = {
     z: types.number(defaultWaterValues.rotation.z),
   },
   scale: {
-    x: types.number(defaultWaterValues.scale.x, { range: [0.1, 8] }),
-    y: types.number(defaultWaterValues.scale.y, { range: [0.1, 8] }),
-    z: types.number(defaultWaterValues.scale.z, { range: [0.1, 8] }),
+    x: types.number(defaultWaterValues.scale.x, { range: [0.1, 20] }),
+    y: types.number(defaultWaterValues.scale.y, { range: [0.1, 20] }),
+    z: types.number(defaultWaterValues.scale.z, { range: [0.1, 20] }),
   },
   waterSize: {
     x: types.number(defaultWaterValues.waterSize.x, { range: [0.05, 48] }),
@@ -306,6 +366,32 @@ const waterTheatreConfig = {
   fresnelPower: types.number(waterPresets.organimoSoft.fresnelPower, {
     range: [0.8, 60],
   }),
+  planarReflectionEnabled: types.boolean(
+    waterPresets.organimoSoft.planarReflectionEnabled,
+  ),
+  planarReflectionStrength: types.number(
+    waterPresets.organimoSoft.planarReflectionStrength,
+    { range: [0, 1.5] },
+  ),
+  planarReflectionDistortion: types.number(
+    waterPresets.organimoSoft.planarReflectionDistortion,
+    { range: [0, 0.08] },
+  ),
+  planarReflectionTint: types.rgba(
+    hexToRgba(waterPresets.organimoSoft.planarReflectionTint),
+  ),
+  planarReflectionFade: types.number(
+    waterPresets.organimoSoft.planarReflectionFade,
+    { range: [0, 1] },
+  ),
+  planarReflectionTargetScale: types.number(
+    defaultWaterValues.planarReflectionTargetScale,
+    { range: [0.1, 1] },
+  ),
+  planarReflectionClipBias: types.number(
+    defaultWaterValues.planarReflectionClipBias,
+    { range: [-0.02, 0.05] },
+  ),
   underwaterEnabled: types.boolean(defaultWaterValues.underwaterEnabled),
   underwaterFogColor: types.rgba(
     hexToRgba(waterPresets.organimoSoft.underwaterFogColor),
@@ -321,6 +407,21 @@ const waterTheatreConfig = {
   showFoamTexture: types.boolean(defaultWaterValues.showFoamTexture),
   showBuoyancySamplePoints: types.boolean(
     defaultWaterValues.showBuoyancySamplePoints,
+  ),
+  showReflectionTextureDebug: types.boolean(
+    defaultWaterValues.showReflectionTextureDebug,
+  ),
+  reflectionDebugRawTexture: types.boolean(
+    defaultWaterValues.reflectionDebugRawTexture,
+  ),
+  reflectionDebugFullStrength: types.boolean(
+    defaultWaterValues.reflectionDebugFullStrength,
+  ),
+  reflectionDebugNoDistortion: types.boolean(
+    defaultWaterValues.reflectionDebugNoDistortion,
+  ),
+  reflectionDebugFixedBlend: types.boolean(
+    defaultWaterValues.reflectionDebugFixedBlend,
   ),
 };
 
@@ -363,6 +464,31 @@ function toWaterInitialValue(values: WaterDebugValues | null) {
       preset.reflectionStrength,
     ),
     fresnelPower: toNumber(values?.fresnelPower, preset.fresnelPower),
+    planarReflectionEnabled:
+      values?.planarReflectionEnabled ?? preset.planarReflectionEnabled,
+    planarReflectionStrength: toNumber(
+      values?.planarReflectionStrength,
+      preset.planarReflectionStrength,
+    ),
+    planarReflectionDistortion: toNumber(
+      values?.planarReflectionDistortion,
+      preset.planarReflectionDistortion,
+    ),
+    planarReflectionTint: hexToRgba(
+      values?.planarReflectionTint ?? preset.planarReflectionTint,
+    ),
+    planarReflectionFade: toNumber(
+      values?.planarReflectionFade,
+      preset.planarReflectionFade,
+    ),
+    planarReflectionTargetScale: toNumber(
+      values?.planarReflectionTargetScale,
+      defaultWaterValues.planarReflectionTargetScale,
+    ),
+    planarReflectionClipBias: toNumber(
+      values?.planarReflectionClipBias,
+      defaultWaterValues.planarReflectionClipBias,
+    ),
     underwaterEnabled:
       values?.underwaterEnabled ?? defaultWaterValues.underwaterEnabled,
     underwaterFogColor: hexToRgba(
@@ -383,6 +509,21 @@ function toWaterInitialValue(values: WaterDebugValues | null) {
     showBuoyancySamplePoints:
       values?.showBuoyancySamplePoints ??
       defaultWaterValues.showBuoyancySamplePoints,
+    showReflectionTextureDebug:
+      values?.showReflectionTextureDebug ??
+      defaultWaterValues.showReflectionTextureDebug,
+    reflectionDebugRawTexture:
+      values?.reflectionDebugRawTexture ??
+      defaultWaterValues.reflectionDebugRawTexture,
+    reflectionDebugFullStrength:
+      values?.reflectionDebugFullStrength ??
+      defaultWaterValues.reflectionDebugFullStrength,
+    reflectionDebugNoDistortion:
+      values?.reflectionDebugNoDistortion ??
+      defaultWaterValues.reflectionDebugNoDistortion,
+    reflectionDebugFixedBlend:
+      values?.reflectionDebugFixedBlend ??
+      defaultWaterValues.reflectionDebugFixedBlend,
   };
 }
 
@@ -403,6 +544,32 @@ function toWaterProSettings(values: WaterTheatreValues) {
     rippleDamping: values.rippleDamping,
     reflectionStrength: values.reflectionStrength,
     fresnelPower: values.fresnelPower,
+    planarReflectionEnabled:
+      values.planarReflectionEnabled ?? preset.planarReflectionEnabled,
+    planarReflectionStrength: toNumber(
+      values.planarReflectionStrength,
+      preset.planarReflectionStrength,
+    ),
+    planarReflectionDistortion: toNumber(
+      values.planarReflectionDistortion,
+      preset.planarReflectionDistortion,
+    ),
+    planarReflectionTint: rgbaToHex(
+      values.planarReflectionTint,
+      preset.planarReflectionTint,
+    ),
+    planarReflectionFade: toNumber(
+      values.planarReflectionFade,
+      preset.planarReflectionFade,
+    ),
+    planarReflectionTargetScale: toNumber(
+      values.planarReflectionTargetScale,
+      defaultWaterValues.planarReflectionTargetScale,
+    ),
+    planarReflectionClipBias: toNumber(
+      values.planarReflectionClipBias,
+      defaultWaterValues.planarReflectionClipBias,
+    ),
     underwaterEnabled: values.underwaterEnabled,
     underwaterFogColor: rgbaToHex(
       values.underwaterFogColor,
@@ -413,6 +580,11 @@ function toWaterProSettings(values: WaterTheatreValues) {
     showRippleTexture: values.showRippleTexture,
     showFoamTexture: values.showFoamTexture,
     showBuoyancySamplePoints: values.showBuoyancySamplePoints,
+    showReflectionTextureDebug: values.showReflectionTextureDebug,
+    reflectionDebugRawTexture: values.reflectionDebugRawTexture,
+    reflectionDebugFullStrength: values.reflectionDebugFullStrength,
+    reflectionDebugNoDistortion: values.reflectionDebugNoDistortion,
+    reflectionDebugFixedBlend: values.reflectionDebugFixedBlend,
   };
 }
 
@@ -421,8 +593,15 @@ export default function HeroWaterStage({ theatreSheet }: HeroWaterStageProps) {
     () => getTheatreWater(theatreSheet),
     [theatreSheet],
   );
+  const deploymentWaterValues = useMemo(
+    () => getDeploymentWaterPresetValues<WaterDebugValues>() ?? null,
+    [],
+  );
   const [theatreValues, setTheatreValues] = useState<WaterTheatreValues>(
-    () => waterObject.value as WaterTheatreValues,
+    () =>
+      isProductionDeployment() && deploymentWaterValues
+        ? toWaterInitialValue(deploymentWaterValues)
+        : (waterObject.value as WaterTheatreValues),
   );
   const [debugValues, setDebugValues] = useState<WaterDebugValues | null>(null);
   const debugKeyRef = useRef("");
@@ -439,16 +618,28 @@ export default function HeroWaterStage({ theatreSheet }: HeroWaterStageProps) {
   }, []);
 
   useEffect(() => {
+    if (isProductionDeployment()) {
+      return;
+    }
+
     waterObject.initialValue = toWaterInitialValue(debugValues);
   }, [debugValues, waterObject]);
 
   useEffect(() => {
+    if (isProductionDeployment()) {
+      if (deploymentWaterValues) {
+        setTheatreValues(toWaterInitialValue(deploymentWaterValues));
+      }
+
+      return undefined;
+    }
+
     const unsubscribe = waterObject.onValuesChange((values: WaterTheatreValues) => {
       setTheatreValues(values as WaterTheatreValues);
     });
 
     return unsubscribe;
-  }, [waterObject]);
+  }, [deploymentWaterValues, waterObject]);
 
   const waterSettings = useMemo(
     () => toWaterProSettings(theatreValues),
@@ -460,6 +651,7 @@ export default function HeroWaterStage({ theatreSheet }: HeroWaterStageProps) {
       position={vectorToArray(theatreValues.position)}
       rotation={rotationToRadians(theatreValues.rotation)}
       scale={vectorToArray(theatreValues.scale)}
+      debug={!isProductionDeployment()}
       theatreSettings={waterSettings}
       usePanelTransform
       onDebugSettingsChange={handleDebugSettingsChange}

@@ -16,6 +16,15 @@ uniform float uFoamDecay;
 uniform sampler2D uRippleTexture;
 uniform sampler2D uFoamTexture;
 uniform vec2 uRippleTexel;
+uniform sampler2D uPlanarReflectionTexture;
+uniform float uPlanarReflectionEnabled;
+uniform float uPlanarReflectionStrength;
+uniform float uPlanarReflectionDistortion;
+uniform vec3 uPlanarReflectionTint;
+uniform float uPlanarReflectionFade;
+uniform float uPlanarReflectionDebugFullStrength;
+uniform float uPlanarReflectionDebugNoDistortion;
+uniform float uPlanarReflectionDebugFixedBlend;
 
 varying vec2 vUv;
 varying vec3 vWorldPosition;
@@ -23,6 +32,7 @@ varying vec3 vNormal;
 varying float vWaveHeight;
 varying float vWaveMask;
 varying float vRippleHeight;
+varying vec4 vPlanarReflectionCoord;
 
 float hash(vec2 p) {
   p = fract(p * vec2(127.1, 311.7));
@@ -103,6 +113,51 @@ void main() {
   color += reflectionColor * sparkle * uReflectionStrength * 1.35;
   color += vec3(0.72, 0.95, 0.92) * rippleEnergy * uRippleStrength * 0.2;
   color += reflectionColor * sparkle * rippleEnergy * uRippleStrength * 0.65;
+
+  float reflectionW =
+    sign(vPlanarReflectionCoord.w) *
+    max(abs(vPlanarReflectionCoord.w), 0.0001);
+  vec3 projectedReflection = vPlanarReflectionCoord.xyz / reflectionW;
+  vec2 planarDistortion =
+    (normal.xz * 0.45 + rippleGradient * uRippleStrength * 0.35) *
+    uPlanarReflectionDistortion *
+    (1.0 - step(0.5, uPlanarReflectionDebugNoDistortion));
+  vec2 planarReflectionUv = projectedReflection.xy + planarDistortion;
+  float planarReflectionBounds =
+    step(0.0, planarReflectionUv.x) *
+    step(0.0, planarReflectionUv.y) *
+    step(planarReflectionUv.x, 1.0) *
+    step(planarReflectionUv.y, 1.0);
+  float planarReflectionEdge =
+    smoothstep(0.0, 0.045, planarReflectionUv.x) *
+    smoothstep(0.0, 0.045, planarReflectionUv.y) *
+    smoothstep(0.0, 0.045, 1.0 - planarReflectionUv.x) *
+    smoothstep(0.0, 0.045, 1.0 - planarReflectionUv.y);
+  vec3 planarReflectionColor =
+    texture2D(uPlanarReflectionTexture, planarReflectionUv).rgb *
+    uPlanarReflectionTint;
+  float planarReflectionLuma = dot(planarReflectionColor, vec3(0.299, 0.587, 0.114));
+  float planarObjectBoost = smoothstep(0.16, 0.62, 1.0 - planarReflectionLuma) * 0.82;
+  float planarAngleWeight = mix(0.025, 0.78, smoothstep(0.02, 0.92, fresnel));
+  float planarVisibility =
+    (1.0 - underwaterMix) *
+    planarReflectionBounds *
+    mix(1.0, planarReflectionEdge, uPlanarReflectionFade) *
+    max(planarAngleWeight, planarObjectBoost);
+  float planarReflectionBlend = clamp(
+    uPlanarReflectionEnabled *
+    uPlanarReflectionStrength *
+    planarVisibility,
+    0.0,
+    0.56
+  );
+  planarReflectionBlend = mix(
+    planarReflectionBlend,
+    (1.0 - underwaterMix) * planarReflectionBounds,
+    step(0.5, uPlanarReflectionDebugFixedBlend)
+  );
+  color = mix(color, planarReflectionColor, planarReflectionBlend);
+
   color = mix(color, uFoamColor, clamp(foamLayer * foamSoftness * 1.18, 0.0, 1.0));
   color += uFoamColor * foamLayer * (0.12 + fresnel * 0.24);
   color = mix(color, color * vec3(0.82, 0.94, 1.02), smoothstep(-0.24, -0.02, vWaveHeight) * 0.38);
@@ -110,6 +165,12 @@ void main() {
   color = mix(color, vec3(dot(color, vec3(0.299, 0.587, 0.114))), underwaterMix * 0.14);
   color += uUnderwaterColor * undersideShimmer * 0.22;
   color += vec3(0.55, 0.94, 0.82) * underside * fresnel * 0.18;
+  color = mix(
+    color,
+    planarReflectionColor,
+    step(0.5, uPlanarReflectionDebugFullStrength) *
+      (1.0 - underwaterMix)
+  );
 
   float alpha = clamp(
     uOpacity +

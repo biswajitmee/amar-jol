@@ -1,0 +1,51 @@
+{
+  "presets": {
+    "hero-leva-custom": {
+      "heroBottle": {
+        "showBottle": true,
+        "bottleX": 0,
+        "bottleY": 1.08,
+        "bottleZ": -3.8,
+        "bottleScale": 1.08,
+        "bottleOpacity": 0.72
+      },
+      "skyBackground": {
+        "enabled": true,
+        "skyTexturePath": "/waterpro/sky-blue-clouds-large.png",
+        "positionX": 0,
+        "positionY": 8.4,
+        "positionZ": -44,
+        "scaleX": 190,
+        "scaleY": 88,
+        "scaleZ": 190,
+        "rotationX": 0,
+        "rotationY": 0,
+        "rotationZ": 0,
+        "curvature": 0.1,
+        "horizonOffset": 0,
+        "opacity": 1,
+        "brightness": 1,
+        "tint": "#ffffff"
+      },
+      "heroLighting": {
+        "sunEnabled": true,
+        "sunColor": "#1115da",
+        "sunIntensity": 12,
+        "sunPositionX": 2.42,
+        "sunPositionY": 3.0900000000000003,
+        "sunPositionZ": 9.92,
+        "fillEnabled": false,
+        "fillColor": "#f3d0b4",
+        "fillIntensity": 1.2,
+        "fillPositionX": -6,
+        "fillPositionY": -2.2,
+        "fillPositionZ": -8,
+        "ambientEnabled": false,
+        "ambientColor": "#fff1dc",
+        "ambientIntensity": 1.08,
+        "horizonGlowIntensity": 2,
+        "warmTintStrength": 0
+      }
+    }
+  }
+}

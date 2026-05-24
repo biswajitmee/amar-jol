@@ -7,46 +7,59 @@ const presetFilePath = path.join(
   "src",
   "waterpro",
   "debug",
-  "waterLevaPresets.json",
+  "heroLevaPresets.json",
 );
 
-const presetValueKeys = new Set([
-  "preset",
-  "waterPosition",
-  "waterRotation",
-  "waterScale",
-  "waterSize",
-  "waveStrength",
-  "waveSpeed",
-  "waveScale",
-  "rippleStrength",
-  "rippleDamping",
-  "foamStrength",
-  "reflectionStrength",
-  "fresnelPower",
-  "planarReflectionEnabled",
-  "planarReflectionStrength",
-  "planarReflectionDistortion",
-  "planarReflectionTint",
-  "planarReflectionFade",
-  "planarReflectionTargetScale",
-  "planarReflectionClipBias",
-  "underwaterEnabled",
-  "underwaterFogColor",
-  "underwaterFogDensity",
-  "causticsStrength",
-  "showRippleTexture",
-  "showFoamTexture",
-  "showBuoyancySamplePoints",
-  "showReflectionTextureDebug",
-  "reflectionDebugRawTexture",
-  "reflectionDebugFullStrength",
-  "reflectionDebugNoDistortion",
-  "reflectionDebugFixedBlend",
-]);
+const presetValueKeysByScope = {
+  heroBottle: new Set([
+    "showBottle",
+    "bottleX",
+    "bottleY",
+    "bottleZ",
+    "bottleScale",
+    "bottleOpacity",
+  ]),
+  skyBackground: new Set([
+    "enabled",
+    "skyTexturePath",
+    "positionX",
+    "positionY",
+    "positionZ",
+    "scaleX",
+    "scaleY",
+    "scaleZ",
+    "rotationX",
+    "rotationY",
+    "rotationZ",
+    "curvature",
+    "horizonOffset",
+    "opacity",
+    "brightness",
+    "tint",
+  ]),
+  heroLighting: new Set([
+    "sunEnabled",
+    "sunColor",
+    "sunIntensity",
+    "sunPositionX",
+    "sunPositionY",
+    "sunPositionZ",
+    "fillEnabled",
+    "fillColor",
+    "fillIntensity",
+    "fillPositionX",
+    "fillPositionY",
+    "fillPositionZ",
+    "ambientEnabled",
+    "ambientColor",
+    "ambientIntensity",
+    "horizonGlowIntensity",
+    "warmTintStrength",
+  ]),
+} satisfies Record<string, Set<string>>;
 
 type PresetFile = {
-  presets: Record<string, Record<string, unknown>>;
+  presets: Record<string, Record<string, Record<string, unknown>>>;
 };
 
 function cleanPresetName(value: unknown) {
@@ -74,32 +87,35 @@ function sanitizeValue(value: unknown): unknown {
     return Number.isFinite(value) ? value : undefined;
   }
 
-  if (Array.isArray(value)) {
-    return value.map(sanitizeValue).filter((item) => item !== undefined);
-  }
-
-  if (isPlainObject(value)) {
-    return Object.fromEntries(
-      Object.entries(value)
-        .map(([key, nestedValue]) => [key, sanitizeValue(nestedValue)] as const)
-        .filter(([, nestedValue]) => nestedValue !== undefined),
-    );
-  }
-
   return undefined;
 }
 
-function sanitizePresetValues(value: unknown) {
+function sanitizeScopedPresetValues(value: unknown) {
   if (!isPlainObject(value)) {
     return {};
   }
 
-  return Object.fromEntries(
-    Object.entries(value)
-      .filter(([key]) => presetValueKeys.has(key))
-      .map(([key, presetValue]) => [key, sanitizeValue(presetValue)] as const)
-      .filter(([, presetValue]) => presetValue !== undefined),
-  );
+  return Object.entries(presetValueKeysByScope).reduce<
+    Record<string, Record<string, unknown>>
+  >((presetValues, [scope, allowedKeys]) => {
+    const scopedValues = value[scope];
+
+    if (!isPlainObject(scopedValues)) {
+      return presetValues;
+    }
+
+    presetValues[scope] = Object.fromEntries(
+      Object.entries(scopedValues)
+        .filter(([key]) => allowedKeys.has(key))
+        .map(([key, presetValue]) => [
+          key,
+          sanitizeValue(presetValue),
+        ] as const)
+        .filter(([, presetValue]) => presetValue !== undefined),
+    );
+
+    return presetValues;
+  }, {});
 }
 
 async function readPresetFile(): Promise<PresetFile> {
@@ -151,7 +167,7 @@ export async function POST(request: Request) {
   const nextData = {
     presets: {
       ...existing.presets,
-      [name]: sanitizePresetValues(body?.values),
+      [name]: sanitizeScopedPresetValues(body?.values),
     },
   };
 

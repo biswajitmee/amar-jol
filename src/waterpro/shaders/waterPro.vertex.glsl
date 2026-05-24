@@ -7,6 +7,7 @@ uniform float uWaveScale;
 uniform float uRippleStrength;
 uniform sampler2D uRippleTexture;
 uniform vec2 uRippleTexel;
+uniform mat4 uPlanarReflectionMatrix;
 
 varying vec2 vUv;
 varying vec3 vWorldPosition;
@@ -14,6 +15,7 @@ varying vec3 vNormal;
 varying float vWaveHeight;
 varying float vWaveMask;
 varying float vRippleHeight;
+varying vec4 vPlanarReflectionCoord;
 
 const float PI = 3.141592653589793;
 
@@ -75,5 +77,6 @@ void main() {
 
   vec4 worldPosition = modelMatrix * vec4(localPosition, 1.0);
   vWorldPosition = worldPosition.xyz;
+  vPlanarReflectionCoord = uPlanarReflectionMatrix * worldPosition;
   gl_Position = projectionMatrix * viewMatrix * worldPosition;
 }
