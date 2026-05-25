@@ -20,6 +20,7 @@ import {
   WATER_PRO_PRESETS,
   useWaterDebugPanel,
 } from "./debug/WaterDebugPanel";
+import WaterlineEdgeBand from "./edge/WaterlineEdgeBand";
 import FallingLeaf from "./objects/FallingLeaf";
 import PlanarReflectionCapture from "./reflection/PlanarReflectionCapture";
 import waterFragmentShader from "./shaders/waterPro.fragment.glsl";
@@ -276,8 +277,10 @@ function WaterProScene({
   const materialRef = useRef(null);
   const groupRef = useRef(null);
   const waterMeshRef = useRef(null);
+  const waterlineEdgeRef = useRef(null);
   const lastDebugSettingsKeyRef = useRef("");
   const emptyTexture = useMemo(() => makeEmptyTexture(), []);
+  const reflectionHiddenObjectRefs = useMemo(() => [waterlineEdgeRef], []);
   const simulation = useWaterSimulation(settings);
   const rippleFBO = useRippleFBO({
     simulation,
@@ -406,6 +409,14 @@ function WaterProScene({
             object={material}
           />
         </mesh>
+        <WaterlineEdgeBand
+          debug={debug}
+          edgeMeshRef={waterlineEdgeRef}
+          waterGroupRef={groupRef}
+          settings={settings}
+          rippleTexture={rippleFBO.rippleTexture}
+          fallbackTexture={emptyTexture}
+        />
         <WaterTextureDebugPreview
           rippleTexture={rippleFBO.rippleTexture}
           foamTexture={rippleFBO.foamTexture}
@@ -482,6 +493,7 @@ function WaterProScene({
         }
         targetScale={settings.planarReflectionTargetScale}
         clipBias={settings.planarReflectionClipBias}
+        hiddenObjectRefs={reflectionHiddenObjectRefs}
       />
     </>
   );

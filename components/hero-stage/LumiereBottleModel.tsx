@@ -11,12 +11,12 @@ import {
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-const AUREN_BOTTLE_MODEL_URL = "/api/models/auren-bottle-2";
+const LUMIERE_BOTTLE_MODEL_URL = "/api/models/lumiere-de-la-mer-bottle";
 const TARGET_MODEL_HEIGHT = 2.6;
 
 type Vector3Tuple = [number, number, number];
 
-type AurenBottleModelProps = {
+type LumiereBottleModelProps = {
   visible: boolean;
   position: Vector3Tuple;
   rotation: Vector3Tuple;
@@ -49,13 +49,13 @@ function prepareModel(scene: Group): PreparedModel {
   };
 }
 
-export default function AurenBottleModel({
+export default function LumiereBottleModel({
   visible,
   position,
   rotation,
   scale,
-}: AurenBottleModelProps) {
-  const gltf = useLoader(GLTFLoader, AUREN_BOTTLE_MODEL_URL);
+}: LumiereBottleModelProps) {
+  const gltf = useLoader(GLTFLoader, LUMIERE_BOTTLE_MODEL_URL);
   const preparedModel = useMemo(
     () => prepareModel(gltf.scene),
     [gltf.scene],
@@ -86,4 +86,4 @@ export default function AurenBottleModel({
   );
 }
 
-useLoader.preload(GLTFLoader, AUREN_BOTTLE_MODEL_URL);
+useLoader.preload(GLTFLoader, LUMIERE_BOTTLE_MODEL_URL);

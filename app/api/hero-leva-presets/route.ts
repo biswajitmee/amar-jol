@@ -56,6 +56,21 @@ const presetValueKeysByScope = {
     "horizonGlowIntensity",
     "warmTintStrength",
   ]),
+  waterlineEdge: new Set([
+    "enabled",
+    "visualThickness",
+    "worldThickness",
+    "opacity",
+    "blurSoftness",
+    "edgeDarkColor",
+    "edgeHighlightColor",
+    "edgeDarkStrength",
+    "edgeHighlightStrength",
+    "positionOffset",
+    "depthOffset",
+    "followRipples",
+    "debugEdgeBand",
+  ]),
 } satisfies Record<string, Set<string>>;
 
 type PresetFile = {

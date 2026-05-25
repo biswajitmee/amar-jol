@@ -91,16 +91,20 @@ export default function PlanarReflectionCapture({
   showDebugPreview = false,
   targetScale = 0.5,
   clipBias = 0,
+  hiddenObjectRefs = [],
 }) {
   const previewMeshRef = useRef(null);
-  const hiddenObjectRefs = useMemo(() => [previewMeshRef], []);
+  const captureHiddenObjectRefs = useMemo(
+    () => [previewMeshRef, ...hiddenObjectRefs],
+    [hiddenObjectRefs],
+  );
   const tintColor = useMemo(() => new Color(planarReflectionTint), [planarReflectionTint]);
   const reflection = usePlanarReflectionCapture({
     waterMeshRef,
     enabled,
     targetScale,
     clipBias,
-    hiddenObjectRefs,
+    hiddenObjectRefs: captureHiddenObjectRefs,
   });
 
   useFrame(() => {

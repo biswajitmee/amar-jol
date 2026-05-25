@@ -2,7 +2,11 @@ import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
 
-const modelPath = path.join(process.cwd(), "model", "auren-bottle-2.glb");
+const modelPath = path.join(
+  process.cwd(),
+  "model",
+  "lumiere_de_la_mer_bottle.glb",
+);
 
 export async function GET() {
   try {
@@ -16,7 +20,10 @@ export async function GET() {
     });
   } catch {
     return NextResponse.json(
-      { error: "auren-bottle-2.glb was not found in the model folder." },
+      {
+        error:
+          "lumiere_de_la_mer_bottle.glb was not found in the model folder.",
+      },
       { status: 404 },
     );
   }

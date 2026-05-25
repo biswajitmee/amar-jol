@@ -4,30 +4,30 @@
       "preset": "organimoSoft",
       "waterPosition": {
         "x": 0.43,
-        "y": -0.18,
-        "z": -29.12
+        "y": -1.26,
+        "z": -36.65
       },
       "waterRotation": {
-        "x": 24.5,
-        "y": -89.80000000000003,
-        "z": 8.4
+        "x": 8.3,
+        "y": 17.900000000000002,
+        "z": -2.4000000000000004
       },
       "waterScale": {
-        "x": 9.4,
-        "y": 12.24,
-        "z": 52.38
+        "x": 20,
+        "y": 5.69,
+        "z": 24.900000000000002
       },
       "waterSize": {
         "x": 4.2,
         "y": 1,
         "z": 2.35
       },
-      "waveStrength": 4.83,
+      "waveStrength": 2.9299999999999997,
       "waveSpeed": 11.950000000000001,
       "waveScale": 0.05,
       "rippleStrength": 1.09,
       "rippleDamping": 0.948,
-      "foamStrength": 0.039999999999999925,
+      "foamStrength": 0.5599999999999999,
       "reflectionStrength": 0.83,
       "fresnelPower": 6.85,
       "planarReflectionEnabled": true,

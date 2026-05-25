@@ -1,10 +1,10 @@
 "use client";
 
 import type { ISheet } from "@theatre/core";
-import AurenBottleStage from "./AurenBottleStage";
 import HeroBottleStage from "./HeroBottleStage";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
 import HeroWaterStage from "./HeroWaterStage";
+import LumiereBottleStage from "./LumiereBottleStage";
 import SkyImageBackground from "@/src/waterpro/environment/SkyImageBackground.jsx";
 
 type HeroStageSceneProps = {
@@ -21,7 +21,7 @@ export default function HeroStageScene({
       <SkyImageBackground />
       <HeroWaterStage theatreSheet={theatreSheet} />
       <HeroBottleStage settings={settings} theatreSheet={theatreSheet} />
-      <AurenBottleStage theatreSheet={theatreSheet} />
+      <LumiereBottleStage theatreSheet={theatreSheet} />
     </>
   );
 }

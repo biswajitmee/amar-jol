@@ -2,7 +2,7 @@
 
 import { types, type ISheet } from "@theatre/core";
 import { Suspense, useEffect, useMemo, useState } from "react";
-import AurenBottleModel from "./AurenBottleModel";
+import LumiereBottleModel from "./LumiereBottleModel";
 
 type Vector3Values = {
   x: number;
@@ -10,18 +10,18 @@ type Vector3Values = {
   z: number;
 };
 
-type AurenBottleTheatreValues = {
+type LumiereBottleTheatreValues = {
   showModel: boolean;
   position: Vector3Values;
   rotation: Vector3Values;
   scale: number;
 };
 
-type AurenBottleStageProps = {
+type LumiereBottleStageProps = {
   theatreSheet: ISheet;
 };
 
-const aurenBottleTheatreConfig = {
+const lumiereBottleTheatreConfig = {
   showModel: types.boolean(true),
   position: {
     x: types.number(0),
@@ -43,50 +43,50 @@ const theatreObjects =
   theatreCacheGlobal.__waterHeroTheatreObjects ?? new Map<string, any>();
 theatreCacheGlobal.__waterHeroTheatreObjects = theatreObjects;
 
-function getTheatreAurenBottle(theatreSheet: ISheet) {
-  const objectKey = "Water Hero Screen/Hero Camera/Auren Bottle";
-  let aurenBottleObject = theatreObjects.get(objectKey);
+function getTheatreLumiereBottle(theatreSheet: ISheet) {
+  const objectKey = "Water Hero Screen/Hero Camera/Lumiere de la Mer Bottle";
+  let lumiereBottleObject = theatreObjects.get(objectKey);
 
-  if (!aurenBottleObject) {
-    aurenBottleObject = theatreSheet.object(
-      "Auren Bottle",
-      aurenBottleTheatreConfig,
+  if (!lumiereBottleObject) {
+    lumiereBottleObject = theatreSheet.object(
+      "Lumiere de la Mer Bottle",
+      lumiereBottleTheatreConfig,
     );
-    theatreObjects.set(objectKey, aurenBottleObject);
+    theatreObjects.set(objectKey, lumiereBottleObject);
   }
 
-  return aurenBottleObject;
+  return lumiereBottleObject;
 }
 
 function toVectorArray(value: Vector3Values): [number, number, number] {
   return [value.x, value.y, value.z];
 }
 
-export default function AurenBottleStage({
+export default function LumiereBottleStage({
   theatreSheet,
-}: AurenBottleStageProps) {
-  const aurenBottleObject = useMemo(
-    () => getTheatreAurenBottle(theatreSheet),
+}: LumiereBottleStageProps) {
+  const lumiereBottleObject = useMemo(
+    () => getTheatreLumiereBottle(theatreSheet),
     [theatreSheet],
   );
   const [theatreValues, setTheatreValues] =
-    useState<AurenBottleTheatreValues>(
-      () => aurenBottleObject.value as AurenBottleTheatreValues,
+    useState<LumiereBottleTheatreValues>(
+      () => lumiereBottleObject.value as LumiereBottleTheatreValues,
     );
 
   useEffect(() => {
-    const unsubscribe = aurenBottleObject.onValuesChange(
-      (values: AurenBottleTheatreValues) => {
-        setTheatreValues(values as AurenBottleTheatreValues);
+    const unsubscribe = lumiereBottleObject.onValuesChange(
+      (values: LumiereBottleTheatreValues) => {
+        setTheatreValues(values as LumiereBottleTheatreValues);
       },
     );
 
     return unsubscribe;
-  }, [aurenBottleObject]);
+  }, [lumiereBottleObject]);
 
   return (
     <Suspense fallback={null}>
-      <AurenBottleModel
+      <LumiereBottleModel
         visible={theatreValues.showModel}
         position={toVectorArray(theatreValues.position)}
         rotation={toVectorArray(theatreValues.rotation)}
