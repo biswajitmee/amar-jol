@@ -9,7 +9,13 @@ import {
   type ISheet,
 } from "@theatre/core";
 import { button, folder, Leva, useControls } from "leva";
-import { useCallback, useEffect, useRef, type RefObject } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type RefObject,
+} from "react";
 import {
   ACESFilmicToneMapping,
   Camera,
@@ -32,6 +38,7 @@ const DEFAULT_SCROLL_SEQUENCE_LENGTH = 4;
 const SCROLL_SECTION_COUNT = 6;
 const SCROLL_TRIGGER_ID = "water-hero-camera-scroll";
 const isDevelopment = process.env.NODE_ENV === "development";
+type TheatreState = typeof theaterState;
 
 const theatreCacheGlobal = globalThis as typeof globalThis & {
   __waterHeroProject?: IProject;
@@ -64,20 +71,18 @@ if (isDevelopment && typeof window !== "undefined") {
   void getTheatreStudio();
 }
 
-const project =
-  theatreCacheGlobal.__waterHeroProject ??
-  getProject(
-    PROJECT_ID,
-    isDevelopment
-      ? {}
-      : {
-          state: theaterState,
-        },
-  );
-theatreCacheGlobal.__waterHeroProject = project;
+function getTheatreRuntime(state?: TheatreState) {
+  const projectConfig = isDevelopment || !state ? {} : { state };
+  const project =
+    theatreCacheGlobal.__waterHeroProject ??
+    getProject(PROJECT_ID, projectConfig);
+  theatreCacheGlobal.__waterHeroProject = project;
 
-const sheet = theatreCacheGlobal.__waterHeroSheet ?? project.sheet(SHEET_ID);
-theatreCacheGlobal.__waterHeroSheet = sheet;
+  const sheet = theatreCacheGlobal.__waterHeroSheet ?? project.sheet(SHEET_ID);
+  theatreCacheGlobal.__waterHeroSheet = sheet;
+
+  return { project, sheet };
+}
 
 type CameraValues = {
   position: {
@@ -245,7 +250,7 @@ function TheatreScrollSmoother({
   return null;
 }
 
-function TheatreStatePanel() {
+function TheatreStatePanel({ project }: { project: IProject }) {
   const setRef = useRef<
     ((values: { theatreStateStatus: string }) => void) | null
   >(null);
@@ -284,7 +289,7 @@ function TheatreStatePanel() {
     } catch (error) {
       setStatus(error instanceof Error ? error.message : "Save failed");
     }
-  }, [setStatus]);
+  }, [project, setStatus]);
 
   const [, set] = useControls(
     "Theatre State",
@@ -358,13 +363,13 @@ function RendererMood() {
   return null;
 }
 
-function Scene() {
+function Scene({ theatreSheet }: { theatreSheet: ISheet }) {
   return (
     <>
       <RendererMood />
       <HeroLightingRig />
-      <TheatreCameraRig theatreSheet={sheet} />
-      <HeroStageWorld theatreSheet={sheet} />
+      <TheatreCameraRig theatreSheet={theatreSheet} />
+      <HeroStageWorld theatreSheet={theatreSheet} />
       {process.env.NODE_ENV === "development" ? <HeroLevaPresetPanel /> : null}
     </>
   );
@@ -372,30 +377,85 @@ function Scene() {
 
 export default function BottleHero() {
   useTheatreStudio();
+  const [productionTheatreState, setProductionTheatreState] =
+    useState<TheatreState | null>(null);
+  const [isTheatreStateReady, setIsTheatreStateReady] =
+    useState(isDevelopment);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollContentRef = useRef<HTMLDivElement>(null);
+  const theatreRuntime = isTheatreStateReady
+    ? getTheatreRuntime(
+        isDevelopment ? undefined : productionTheatreState ?? theaterState,
+      )
+    : null;
+
+  useEffect(() => {
+    if (isDevelopment) {
+      return undefined;
+    }
+
+    let isActive = true;
+
+    async function loadTheatreState() {
+      try {
+        const response = await fetch(THEATRE_STATE_API, {
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Theatre state load failed with ${response.status}`);
+        }
+
+        const state = (await response.json()) as TheatreState;
+
+        if (isActive) {
+          setProductionTheatreState(state);
+        }
+      } catch (error) {
+        console.error("Failed to load theaterstate.json", error);
+
+        if (isActive) {
+          setProductionTheatreState(theaterState);
+        }
+      } finally {
+        if (isActive) {
+          setIsTheatreStateReady(true);
+        }
+      }
+    }
+
+    void loadTheatreState();
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
 
   return (
     <main className="relative bg-[#120f11] w-full min-h-dvh overflow-x-hidden text-white">
-      <div className="z-0 fixed inset-0">
-        <Canvas
-          className="absolute inset-0"
-          camera={{
-            position: [0, 1.92, 8.6],
-            rotation: [MathUtils.degToRad(8.5), 0, 0],
-            fov: 45,
-          }}
-          gl={{ preserveDrawingBuffer: true }}
-          shadows
-        >
-          <Scene />
-        </Canvas>
-      </div>
-      <TheatreScrollSmoother
-        theatreSheet={sheet}
-        wrapperRef={scrollWrapperRef}
-        contentRef={scrollContentRef}
-      />
+      {theatreRuntime ? (
+        <>
+          <div className="z-0 fixed inset-0">
+            <Canvas
+              className="absolute inset-0"
+              camera={{
+                position: [0, 1.92, 8.6],
+                rotation: [MathUtils.degToRad(8.5), 0, 0],
+                fov: 45,
+              }}
+              gl={{ preserveDrawingBuffer: true }}
+              shadows
+            >
+              <Scene theatreSheet={theatreRuntime.sheet} />
+            </Canvas>
+          </div>
+          <TheatreScrollSmoother
+            theatreSheet={theatreRuntime.sheet}
+            wrapperRef={scrollWrapperRef}
+            contentRef={scrollContentRef}
+          />
+        </>
+      ) : null}
       <div
         id="smooth-wrapper"
         ref={scrollWrapperRef}
@@ -411,7 +471,9 @@ export default function BottleHero() {
           ))}
         </div>
       </div>
-      {isDevelopment ? <TheatreStatePanel /> : null}
+      {isDevelopment && theatreRuntime ? (
+        <TheatreStatePanel project={theatreRuntime.project} />
+      ) : null}
       {isDevelopment ? <Leva collapsed /> : null}
     </main>
   );

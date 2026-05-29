@@ -6,6 +6,7 @@ import HelixPetalFlowStage from "./HelixPetalFlowStage";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
 import HeroWaterStage from "./HeroWaterStage";
 import LumiereBottleStage from "./LumiereBottleStage";
+import SketchModelsStage from "./SketchModelsStage";
 import SkyImageBackground from "@/src/waterpro/environment/SkyImageBackground.jsx";
 
 type HeroStageSceneProps = {
@@ -24,6 +25,7 @@ export default function HeroStageScene({
       <HeroBottleStage settings={settings} theatreSheet={theatreSheet} />
       <LumiereBottleStage theatreSheet={theatreSheet} />
       <HelixPetalFlowStage theatreSheet={theatreSheet} />
+      <SketchModelsStage theatreSheet={theatreSheet} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import theaterState from "@/theaterstate.json";
 
 const theaterStateFilePath = path.join(process.cwd(), "theaterstate.json");
 
@@ -17,6 +18,10 @@ function isTheatreState(value: unknown): value is Record<string, unknown> {
 }
 
 export async function GET() {
+  if (process.env.NODE_ENV !== "development") {
+    return NextResponse.json(theaterState);
+  }
+
   const text = await fs.readFile(theaterStateFilePath, "utf8");
 
   return NextResponse.json(JSON.parse(text));

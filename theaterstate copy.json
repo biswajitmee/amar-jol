@@ -106,42 +106,6 @@
             "position": {
               "z": -8
             }
-          },
-          "Sketch Flower Magic": {
-            "scale": 5.555443037974683,
-            "position": {
-              "y": -24,
-              "x": -6.189985867333992,
-              "z": -0.5326365310243804
-            },
-            "rotation": {
-              "y": 168.59246025344584,
-              "x": 2.1316282072803006e-14
-            }
-          },
-          "Sketch Flower": {
-            "scale": 4.606392405063291,
-            "position": {
-              "y": 1.5210052995405565,
-              "x": 5.159943469335953,
-              "z": -11.541421000656356
-            },
-            "rotation": {
-              "y": -74.35983562376936,
-              "x": 54.6748940050049
-            }
-          },
-          "Sketch Flower Candle": {
-            "scale": 12.008987341772151,
-            "position": {
-              "y": -9.11464474983591,
-              "z": -14.959412781844819,
-              "x": -0.5662552997497523
-            },
-            "rotation": {
-              "y": -168.3916383722926,
-              "x": 13.668723501251222
-            }
           }
         }
       },
@@ -1214,47 +1178,19 @@
               "gHz151wFeH": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "FCC25J6RUQ",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -4
-                  }
-                ]
+                "keyframes": []
               },
               "OhahZ5sq0s": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "_Y-tlE6wfL",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 5
-                  }
-                ]
+                "keyframes": []
               },
               "nOupNaPkhG": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"position\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "nxp2Vt0OZX",
+                    "id": "spn6BiAkwx",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1273,7 +1209,7 @@
                 "__debugName": "Helix Petal Flow:[\"rotation\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "1muUCuhfnt",
+                    "id": "3Rm6xcXxnQ",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1283,7 +1219,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -29.64404148623648
+                    "value": -47.84053225437927
                   }
                 ]
               },
@@ -1292,7 +1228,7 @@
                 "__debugName": "Helix Petal Flow:[\"rotation\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "7pY8xWOoFQ",
+                    "id": "WHeD32UFaY",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1302,7 +1238,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 180
+                    "value": 38.75147399606192
                   }
                 ]
               },
@@ -1311,7 +1247,7 @@
                 "__debugName": "Helix Petal Flow:[\"rotation\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "0lYT4xeunn",
+                    "id": "phKsrruhxc",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1321,66 +1257,24 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 180
+                    "value": -61.52385206139242
                   }
                 ]
               },
               "hnQDzpIr9d": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"scale\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "k-8qQtIcWi",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
+                "keyframes": []
               },
               "h1LgJXW3W1": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"scale\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "P0OBpWM2P4",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
+                "keyframes": []
               },
               "zI8tvztkac": {
                 "type": "BasicKeyframedTrack",
                 "__debugName": "Helix Petal Flow:[\"scale\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "S1xZQzv4C7",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
+                "keyframes": []
               }
             },
             "trackIdByPropPath": {
@@ -1394,670 +1288,6 @@
               "[\"scale\",\"y\"]": "h1LgJXW3W1",
               "[\"scale\",\"z\"]": "zI8tvztkac"
             }
-          },
-          "Sketch Flower Candle": {
-            "trackData": {
-              "eldEK5Ofbn": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"showModel\"]",
-                "keyframes": [
-                  {
-                    "id": "SU9XTXrf8H",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": true
-                  }
-                ]
-              },
-              "n4_yffi2mx": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "lluGdOoAgP",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.5662552997497523
-                  }
-                ]
-              },
-              "jcTSyggK_d": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "T4Nb0_eNbl",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -9.11464474983591
-                  }
-                ]
-              },
-              "WQJuo8UhqA": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "ejOObZydXP",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -12.680751594385848
-                  }
-                ]
-              },
-              "E9w6nQAuhB": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "JqsPnmsIRe",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 13.668723501251222
-                  }
-                ]
-              },
-              "h9uSWfSeNI": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "vyClqDnRgt",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -168.3916383722926
-                  }
-                ]
-              },
-              "oTau6j3wU5": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "pp4Ey8hEIU",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "I8KCA3VajH": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Candle:[\"scale\"]",
-                "keyframes": [
-                  {
-                    "id": "stTsdBDiBD",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 12.008987341772151
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"showModel\"]": "eldEK5Ofbn",
-              "[\"position\",\"x\"]": "n4_yffi2mx",
-              "[\"position\",\"y\"]": "jcTSyggK_d",
-              "[\"position\",\"z\"]": "WQJuo8UhqA",
-              "[\"rotation\",\"x\"]": "E9w6nQAuhB",
-              "[\"rotation\",\"y\"]": "h9uSWfSeNI",
-              "[\"rotation\",\"z\"]": "oTau6j3wU5",
-              "[\"scale\"]": "I8KCA3VajH"
-            }
-          },
-          "Sketch Flower": {
-            "trackData": {
-              "p9MA37BUk5": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"showModel\"]",
-                "keyframes": [
-                  {
-                    "id": "n7ySu1EUNm",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": true
-                  }
-                ]
-              },
-              "7McQ2dQpva": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "dsJV-3zVyG",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 5.159943469335953
-                  }
-                ]
-              },
-              "JyDsg4H37n": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "n-oj1RzPSa",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1.5210052995405565
-                  }
-                ]
-              },
-              "vlRNHVv1H8": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "vKLExn78aH",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -11.541421000656356
-                  }
-                ]
-              },
-              "dlTA_ON7xa": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "zp9SDoAHkz",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 54.6748940050049
-                  }
-                ]
-              },
-              "42BbxBDhCT": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "OJRPdjVUKm",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 294.7832767445852
-                  }
-                ]
-              },
-              "nV_RQJ3IXA": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "0Bju27V3i_",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "pBG7ZfrDeW": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower:[\"scale\"]",
-                "keyframes": [
-                  {
-                    "id": "ZBl-Xmqkln",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 4.606392405063291
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"showModel\"]": "p9MA37BUk5",
-              "[\"position\",\"x\"]": "7McQ2dQpva",
-              "[\"position\",\"y\"]": "JyDsg4H37n",
-              "[\"position\",\"z\"]": "vlRNHVv1H8",
-              "[\"rotation\",\"x\"]": "dlTA_ON7xa",
-              "[\"rotation\",\"y\"]": "42BbxBDhCT",
-              "[\"rotation\",\"z\"]": "nV_RQJ3IXA",
-              "[\"scale\"]": "pBG7ZfrDeW"
-            }
-          },
-          "Sketch Flower Magic": {
-            "trackData": {
-              "QoGwNc1yKi": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"showModel\"]",
-                "keyframes": [
-                  {
-                    "id": "IeeRvS7Rgw",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": true
-                  }
-                ]
-              },
-              "0baj81jilx": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "6kJ4rSrw2x",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -6.189985867333992
-                  }
-                ]
-              },
-              "qVcsmCr5Yg": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "Rn4d7kWd1x",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -24
-                  }
-                ]
-              },
-              "PB6z0qdGIp": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "HCsztVfFK3",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -0.5326365310243804
-                  }
-                ]
-              },
-              "BOIk_O6xtM": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "xFVmqvpsOl",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 2.1316282072803006e-14
-                  }
-                ]
-              },
-              "8JOIWEyJhY": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "lKcBxJb6IC",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 168.59246025344584
-                  }
-                ]
-              },
-              "xEOdw82MGP": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "dbbUMeUP5i",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "PFgGFtNfiB": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Flower Magic:[\"scale\"]",
-                "keyframes": [
-                  {
-                    "id": "a6wRJXaAYd",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 5.555443037974683
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"showModel\"]": "QoGwNc1yKi",
-              "[\"position\",\"x\"]": "0baj81jilx",
-              "[\"position\",\"y\"]": "qVcsmCr5Yg",
-              "[\"position\",\"z\"]": "PB6z0qdGIp",
-              "[\"rotation\",\"x\"]": "BOIk_O6xtM",
-              "[\"rotation\",\"y\"]": "8JOIWEyJhY",
-              "[\"rotation\",\"z\"]": "xEOdw82MGP",
-              "[\"scale\"]": "PFgGFtNfiB"
-            }
-          },
-          "Sketch Glowing Flower": {
-            "trackData": {
-              "XFdtjnpUvt": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"showModel\"]",
-                "keyframes": [
-                  {
-                    "id": "Yv0BIn2XHj",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": true
-                  }
-                ]
-              },
-              "FryK64Ei78": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"position\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "yPCfJJAjET",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 3.3
-                  }
-                ]
-              },
-              "hI6mv-5NuK": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"position\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "SBrAEQVPyp",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "kmNKC8eVGr": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"position\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "QFqk3X_oT6",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -10.5
-                  }
-                ]
-              },
-              "-EZ7wwhBgS": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"rotation\",\"x\"]",
-                "keyframes": [
-                  {
-                    "id": "1JedkMQPkj",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "PYa_pO701k": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"rotation\",\"y\"]",
-                "keyframes": [
-                  {
-                    "id": "6Tl8LKoHnM",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 18
-                  }
-                ]
-              },
-              "ktTqlP3vtY": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"rotation\",\"z\"]",
-                "keyframes": [
-                  {
-                    "id": "S-JVJFlqt6",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  }
-                ]
-              },
-              "8TfdgWRfwh": {
-                "type": "BasicKeyframedTrack",
-                "__debugName": "Sketch Glowing Flower:[\"scale\"]",
-                "keyframes": [
-                  {
-                    "id": "p4fzY8wY_W",
-                    "position": 0,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 1
-                  }
-                ]
-              }
-            },
-            "trackIdByPropPath": {
-              "[\"showModel\"]": "XFdtjnpUvt",
-              "[\"position\",\"x\"]": "FryK64Ei78",
-              "[\"position\",\"y\"]": "hI6mv-5NuK",
-              "[\"position\",\"z\"]": "kmNKC8eVGr",
-              "[\"rotation\",\"x\"]": "-EZ7wwhBgS",
-              "[\"rotation\",\"y\"]": "PYa_pO701k",
-              "[\"rotation\",\"z\"]": "ktTqlP3vtY",
-              "[\"scale\"]": "8TfdgWRfwh"
-            }
           }
         }
       }
@@ -2065,8 +1295,6 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
-    "9xCnrLg_li0-72VX",
-    "srtprNsrFpvioi0K",
     "lvZ2DRLnxFnTHgec",
     "rfwrhDh243yRPYxZ",
     "water-hero-camera-v1"
