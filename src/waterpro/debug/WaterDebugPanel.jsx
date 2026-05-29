@@ -392,7 +392,7 @@ function makePanelSchema(defaults, transformDefaults, presetFileControls) {
           value: transformDefaults.scale.x,
           label: "Scale X",
           min: 0.1,
-          max: 20,
+          max: 50,
           step: 0.01,
         },
         waterScaleY: {
@@ -466,7 +466,7 @@ function makePanelSchema(defaults, transformDefaults, presetFileControls) {
               value: presetValues.planarReflectionStrength ?? defaults.planarReflectionStrength ?? 0.45,
               label: "Strength",
               min: 0,
-              max: 1.5,
+              max: 2.5,
               step: 0.01,
             },
             planarReflectionDistortion: {

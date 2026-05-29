@@ -2,6 +2,7 @@
 
 import type { ISheet } from "@theatre/core";
 import HeroBottleStage from "./HeroBottleStage";
+import HelixPetalFlowStage from "./HelixPetalFlowStage";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
 import HeroWaterStage from "./HeroWaterStage";
 import LumiereBottleStage from "./LumiereBottleStage";
@@ -22,6 +23,7 @@ export default function HeroStageScene({
       <HeroWaterStage theatreSheet={theatreSheet} />
       <HeroBottleStage settings={settings} theatreSheet={theatreSheet} />
       <LumiereBottleStage theatreSheet={theatreSheet} />
+      <HelixPetalFlowStage theatreSheet={theatreSheet} />
     </>
   );
 }

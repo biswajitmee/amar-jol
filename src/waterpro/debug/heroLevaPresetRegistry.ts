@@ -40,12 +40,17 @@ export function registerHeroLevaPresetScope(
   };
 }
 
-export function readHeroLevaPresetValues() {
+export function readHeroLevaPresetValues(scopes?: readonly string[]) {
+  const entries = scopes
+    ? scopes.flatMap((scope) => {
+        const entry = presetScopes.get(scope);
+
+        return entry ? ([[scope, entry]] as const) : [];
+      })
+    : Array.from(presetScopes.entries());
+
   return Object.fromEntries(
-    Array.from(presetScopes.entries()).map(([scope, entry]) => [
-      scope,
-      entry.getValues(),
-    ]),
+    entries.map(([scope, entry]) => [scope, entry.getValues()]),
   );
 }
 

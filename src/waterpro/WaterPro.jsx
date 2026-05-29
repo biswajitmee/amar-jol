@@ -21,10 +21,11 @@ import {
   useWaterDebugPanel,
 } from "./debug/WaterDebugPanel";
 import WaterlineEdgeBand from "./edge/WaterlineEdgeBand";
-import FallingLeaf from "./objects/FallingLeaf";
+import PetalRain from "./objects/PetalRain";
 import PlanarReflectionCapture from "./reflection/PlanarReflectionCapture";
 import waterFragmentShader from "./shaders/waterPro.fragment.glsl";
 import waterVertexShader from "./shaders/waterPro.vertex.glsl";
+import UnderwaterWorld from "./underwater/UnderwaterWorld";
 import { useRippleFBO } from "./sim/useRippleFBO";
 import { useWaterSimulation } from "./sim/useWaterSimulation";
 
@@ -278,9 +279,26 @@ function WaterProScene({
   const groupRef = useRef(null);
   const waterMeshRef = useRef(null);
   const waterlineEdgeRef = useRef(null);
+  const underwaterRaysRef = useRef(null);
+  const underwaterCausticsRef = useRef(null);
+  const underwaterParticlesRef = useRef(null);
+  const underwaterBubblesRef = useRef(null);
+  const underwaterDebugRef = useRef(null);
+  const petalSpawnBoundaryRef = useRef(null);
   const lastDebugSettingsKeyRef = useRef("");
   const emptyTexture = useMemo(() => makeEmptyTexture(), []);
-  const reflectionHiddenObjectRefs = useMemo(() => [waterlineEdgeRef], []);
+  const reflectionHiddenObjectRefs = useMemo(
+    () => [
+      waterlineEdgeRef,
+      underwaterRaysRef,
+      underwaterCausticsRef,
+      underwaterParticlesRef,
+      underwaterBubblesRef,
+      underwaterDebugRef,
+      petalSpawnBoundaryRef,
+    ],
+    [],
+  );
   const simulation = useWaterSimulation(settings);
   const rippleFBO = useRippleFBO({
     simulation,
@@ -437,41 +455,33 @@ function WaterProScene({
           enabled={settings.underwaterEnabled}
           onUnderwaterChange={onUnderwaterChange}
         />
+        <UnderwaterWorld
+          reflectionRefs={{
+            raysRef: underwaterRaysRef,
+            causticsRef: underwaterCausticsRef,
+            particlesRef: underwaterParticlesRef,
+            bubblesRef: underwaterBubblesRef,
+            debugRef: underwaterDebugRef,
+          }}
+          waterGroupRef={groupRef}
+          simulation={simulation}
+          sampler={simulation.sampler}
+          waterParams={settings}
+          width={settings.width}
+          depth={settings.depth}
+          enabled
+          debug={debug}
+        />
 
         {settings.showDemoLeaves ? (
-          <>
-            <FallingLeaf
-              simulation={simulation}
-              sampler={simulation.sampler}
-              waterParams={settings}
-              startPosition={[-0.86, 1.02, -0.24]}
-              scale={0.92}
-              fallSpeed={0.34}
-              windStrength={0.065}
-              buoyancy={1.05}
-              sinkDelay={5.2}
-              sinkSpeed={0.055}
-              impactStrength={0.34}
-              impactRadius={settings.rippleRadius}
-              debug={settings.showBuoyancySamplePoints}
-            />
-            <FallingLeaf
-              simulation={simulation}
-              sampler={simulation.sampler}
-              waterParams={settings}
-              startPosition={[0.62, 1.28, 0.28]}
-              scale={0.72}
-              fallSpeed={0.3}
-              windStrength={0.09}
-              buoyancy={0.92}
-              sinkDelay={6.4}
-              sinkSpeed={0.045}
-              impactStrength={0.27}
-              impactRadius={settings.rippleRadius * 0.82}
-              color="#c06f54"
-              debug={settings.showBuoyancySamplePoints}
-            />
-          </>
+          <PetalRain
+            simulation={simulation}
+            sampler={simulation.sampler}
+            waterParams={settings}
+            impactRadius={settings.rippleRadius}
+            debug={debug}
+            spawnBoundaryRef={petalSpawnBoundaryRef}
+          />
         ) : null}
       </group>
       <PlanarReflectionCapture

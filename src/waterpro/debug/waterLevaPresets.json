@@ -3,17 +3,17 @@
     "hero-water-custom": {
       "preset": "organimoSoft",
       "waterPosition": {
-        "x": 0.43,
+        "x": 10.120000000000001,
         "y": -1.26,
-        "z": -36.65
+        "z": -18.35
       },
       "waterRotation": {
-        "x": 8.3,
-        "y": 17.900000000000002,
-        "z": -2.4000000000000004
+        "x": 5,
+        "y": 5,
+        "z": 0
       },
       "waterScale": {
-        "x": 20,
+        "x": 33.06,
         "y": 5.69,
         "z": 24.900000000000002
       },
@@ -22,20 +22,20 @@
         "y": 1,
         "z": 2.35
       },
-      "waveStrength": 2.9299999999999997,
-      "waveSpeed": 11.950000000000001,
-      "waveScale": 0.05,
-      "rippleStrength": 1.09,
-      "rippleDamping": 0.948,
+      "waveStrength": 7.4799999999999995,
+      "waveSpeed": 9.620000000000001,
+      "waveScale": 0.06999999999999995,
+      "rippleStrength": 0.7200000000000001,
+      "rippleDamping": 0.947,
       "foamStrength": 0.5599999999999999,
-      "reflectionStrength": 0.83,
-      "fresnelPower": 6.85,
+      "reflectionStrength": 0.20999999999999996,
+      "fresnelPower": 3.45,
       "planarReflectionEnabled": true,
-      "planarReflectionStrength": 0.45,
-      "planarReflectionDistortion": 0.045,
-      "planarReflectionFade": 0.16999999999999993,
-      "planarReflectionTargetScale": 0.7,
-      "planarReflectionClipBias": 0.034,
+      "planarReflectionStrength": 2.49,
+      "planarReflectionDistortion": 0.057999999999999996,
+      "planarReflectionFade": 0,
+      "planarReflectionTargetScale": 1,
+      "planarReflectionClipBias": 0.0195,
       "underwaterEnabled": true,
       "underwaterFogColor": "#0a5665",
       "underwaterFogDensity": 0.055,
