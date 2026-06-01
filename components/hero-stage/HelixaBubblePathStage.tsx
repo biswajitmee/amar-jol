@@ -3,7 +3,7 @@
 import { types, type ISheet } from "@theatre/core";
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { MathUtils } from "three";
-import HelixPetalFlow from "@/src/waterpro/objects/HelixPetalFlow.jsx";
+import HelixaBubblePath from "@/src/waterpro/objects/HelixaBubblePath.jsx";
 
 type Vector3Values = {
   x: number;
@@ -11,20 +11,20 @@ type Vector3Values = {
   z: number;
 };
 
-type HelixPetalFlowTheatreValues = {
+type HelixaBubblePathTheatreValues = {
   position: Vector3Values;
   rotation: Vector3Values;
   scale: Vector3Values;
 };
 
-type HelixPetalFlowStageProps = {
+type HelixaBubblePathStageProps = {
   theatreSheet: ISheet;
 };
 
-const helixPetalFlowTheatreConfig = {
+const helixaBubblePathTheatreConfig = {
   position: {
     x: types.number(0),
-    y: types.number(2.22),
+    y: types.number(1.92),
     z: types.number(-3.8),
   },
   rotation: {
@@ -46,19 +46,19 @@ const theatreObjects =
   theatreCacheGlobal.__waterHeroTheatreObjects ?? new Map<string, any>();
 theatreCacheGlobal.__waterHeroTheatreObjects = theatreObjects;
 
-function getTheatreHelixPetalFlow(theatreSheet: ISheet) {
-  const objectKey = "Water Hero Screen/Hero Camera/Helix Petal Flow";
-  let helixPetalFlowObject = theatreObjects.get(objectKey);
+function getTheatreHelixaBubblePath(theatreSheet: ISheet) {
+  const objectKey = "Water Hero Screen/Hero Camera/Helixa Bubble Path";
+  let helixaBubblePathObject = theatreObjects.get(objectKey);
 
-  if (!helixPetalFlowObject) {
-    helixPetalFlowObject = theatreSheet.object(
-      "Helix Petal Flow",
-      helixPetalFlowTheatreConfig,
+  if (!helixaBubblePathObject) {
+    helixaBubblePathObject = theatreSheet.object(
+      "Helixa Bubble Path",
+      helixaBubblePathTheatreConfig,
     );
-    theatreObjects.set(objectKey, helixPetalFlowObject);
+    theatreObjects.set(objectKey, helixaBubblePathObject);
   }
 
-  return helixPetalFlowObject;
+  return helixaBubblePathObject;
 }
 
 function vectorToArray(value: Vector3Values): [number, number, number] {
@@ -73,37 +73,37 @@ function rotationToRadians(value: Vector3Values): [number, number, number] {
   ];
 }
 
-export default function HelixPetalFlowStage({
+export default function HelixaBubblePathStage({
   theatreSheet,
-}: HelixPetalFlowStageProps) {
-  const helixPetalFlowObject = useMemo(
-    () => getTheatreHelixPetalFlow(theatreSheet),
+}: HelixaBubblePathStageProps) {
+  const helixaBubblePathObject = useMemo(
+    () => getTheatreHelixaBubblePath(theatreSheet),
     [theatreSheet],
   );
   const [theatreValues, setTheatreValues] =
-    useState<HelixPetalFlowTheatreValues>(
-      () => helixPetalFlowObject.value as HelixPetalFlowTheatreValues,
+    useState<HelixaBubblePathTheatreValues>(
+      () => helixaBubblePathObject.value as HelixaBubblePathTheatreValues,
     );
 
   useEffect(() => {
-    const unsubscribe = helixPetalFlowObject.onValuesChange(
-      (values: HelixPetalFlowTheatreValues) => {
-        setTheatreValues(values as HelixPetalFlowTheatreValues);
+    const unsubscribe = helixaBubblePathObject.onValuesChange(
+      (values: HelixaBubblePathTheatreValues) => {
+        setTheatreValues(values as HelixaBubblePathTheatreValues);
       },
     );
 
     return unsubscribe;
-  }, [helixPetalFlowObject]);
+  }, [helixaBubblePathObject]);
 
   return (
     <group
       position={vectorToArray(theatreValues.position)}
       rotation={rotationToRadians(theatreValues.rotation)}
       scale={vectorToArray(theatreValues.scale)}
-      renderOrder={40}
+      renderOrder={78}
     >
       <Suspense fallback={null}>
-        <HelixPetalFlow />
+        <HelixaBubblePath />
       </Suspense>
     </group>
   );

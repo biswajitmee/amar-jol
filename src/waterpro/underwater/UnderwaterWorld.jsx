@@ -110,6 +110,27 @@ function makeControlSchema(defaults, onBubblePreview) {
           step: 0.01,
           label: "Opacity",
         },
+        rayDensity: {
+          value: defaults.rayDensity,
+          min: 1,
+          max: 96,
+          step: 1,
+          label: "Ray density",
+        },
+        rayTopRadius: {
+          value: defaults.rayTopRadius,
+          min: 0.001,
+          max: 0.8,
+          step: 0.001,
+          label: "Top radius",
+        },
+        rayBottomRadius: {
+          value: defaults.rayBottomRadius,
+          min: 0.01,
+          max: 3,
+          step: 0.01,
+          label: "Bottom radius",
+        },
         rayScale: {
           value: defaults.rayScale,
           min: 0.25,
@@ -131,54 +152,19 @@ function makeControlSchema(defaults, onBubblePreview) {
           step: 0.01,
           label: "Spread",
         },
+        rayLightMargin: {
+          value: defaults.rayLightMargin,
+          min: 0,
+          max: 4,
+          step: 0.01,
+          label: "Light margin",
+        },
         raySpeed: {
           value: defaults.raySpeed,
           min: 0,
           max: 0.3,
           step: 0.001,
           label: "Speed",
-        },
-        rayOriginX: {
-          value: defaults.rayOriginX,
-          min: -8,
-          max: 8,
-          step: 0.01,
-          label: "Origin X",
-        },
-        rayOriginY: {
-          value: defaults.rayOriginY,
-          min: -3,
-          max: 3,
-          step: 0.01,
-          label: "Origin Y",
-        },
-        rayOriginZ: {
-          value: defaults.rayOriginZ,
-          min: -3,
-          max: 3,
-          step: 0.01,
-          label: "Origin Z",
-        },
-        rayDirectionX: {
-          value: defaults.rayDirectionX,
-          min: -1,
-          max: 1,
-          step: 0.01,
-          label: "Direction X",
-        },
-        rayDirectionY: {
-          value: defaults.rayDirectionY,
-          min: -1,
-          max: 0,
-          step: 0.01,
-          label: "Direction Y",
-        },
-        rayDirectionZ: {
-          value: defaults.rayDirectionZ,
-          min: -1,
-          max: 1,
-          step: 0.01,
-          label: "Direction Z",
         },
         rayDepthFade: {
           value: defaults.rayDepthFade,
@@ -473,6 +459,7 @@ function UnderwaterWorldScene({
   enabled = true,
   bubblePreviewToken = 0,
   reflectionRefs = null,
+  raysTransform = null,
 }) {
   const localRootRef = useRef(null);
   const setRootRef = useCallback(
@@ -531,6 +518,7 @@ function UnderwaterWorldScene({
         width={width}
         depth={depth}
         enabled={enabled}
+        theatreTransform={raysTransform}
       />
       <UnderwaterCaustics
         reflectionRef={reflectionRefs?.causticsRef}

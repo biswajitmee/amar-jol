@@ -8,6 +8,7 @@ import {
   isProductionDeployment,
 } from "@/src/waterpro/debug/deploymentLevaPresets";
 import WaterPro from "@/src/waterpro/WaterPro.jsx";
+import UnderwaterGodRaysStage from "./UnderwaterGodRaysStage";
 
 type Vector3Values = {
   x: number;
@@ -331,14 +332,14 @@ const waterTheatreConfig = {
     z: types.number(defaultWaterValues.rotation.z),
   },
   scale: {
-    x: types.number(defaultWaterValues.scale.x, { range: [0.1, 20] }),
-    y: types.number(defaultWaterValues.scale.y, { range: [0.1, 20] }),
-    z: types.number(defaultWaterValues.scale.z, { range: [0.1, 20] }),
+    x: types.number(defaultWaterValues.scale.x),
+    y: types.number(defaultWaterValues.scale.y),
+    z: types.number(defaultWaterValues.scale.z),
   },
   waterSize: {
-    x: types.number(defaultWaterValues.waterSize.x, { range: [0.05, 48] }),
-    y: types.number(defaultWaterValues.waterSize.y, { range: [0.05, 24] }),
-    z: types.number(defaultWaterValues.waterSize.z, { range: [0.05, 48] }),
+    x: types.number(defaultWaterValues.waterSize.x),
+    y: types.number(defaultWaterValues.waterSize.y),
+    z: types.number(defaultWaterValues.waterSize.z),
   },
   waveStrength: types.number(waterPresets.organimoSoft.waveStrength, {
     range: [0, 16],
@@ -647,14 +648,19 @@ export default function HeroWaterStage({ theatreSheet }: HeroWaterStageProps) {
   );
 
   return (
-    <WaterPro
-      position={vectorToArray(theatreValues.position)}
-      rotation={rotationToRadians(theatreValues.rotation)}
-      scale={vectorToArray(theatreValues.scale)}
-      debug={!isProductionDeployment()}
-      theatreSettings={waterSettings}
-      usePanelTransform
-      onDebugSettingsChange={handleDebugSettingsChange}
-    />
+    <UnderwaterGodRaysStage theatreSheet={theatreSheet}>
+      {(godRaysTransform) => (
+        <WaterPro
+          position={vectorToArray(theatreValues.position)}
+          rotation={rotationToRadians(theatreValues.rotation)}
+          scale={vectorToArray(theatreValues.scale)}
+          debug={!isProductionDeployment()}
+          theatreSettings={waterSettings}
+          underwaterRaysTransform={godRaysTransform}
+          usePanelTransform
+          onDebugSettingsChange={handleDebugSettingsChange}
+        />
+      )}
+    </UnderwaterGodRaysStage>
   );
 }

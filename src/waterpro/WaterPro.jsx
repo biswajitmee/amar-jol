@@ -235,6 +235,7 @@ function WaterProScene({
   debug = false,
   panelValues = null,
   theatreSettings = null,
+  underwaterRaysTransform = null,
   usePanelTransform = true,
   onDebugSettingsChange,
   onUnderwaterChange,
@@ -471,6 +472,7 @@ function WaterProScene({
           depth={settings.depth}
           enabled
           debug={debug}
+          raysTransform={underwaterRaysTransform}
         />
 
         {settings.showDemoLeaves ? (

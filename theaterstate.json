@@ -142,12 +142,50 @@
               "y": -168.3916383722926,
               "x": 13.668723501251222
             }
+          },
+          "Helixa Bubble Path": {
+            "position": {
+              "y": 8
+            }
+          },
+          "Underwater Theatre Light": {
+            "position": {
+              "y": -19.191074583059855,
+              "x": -3.390602917709359,
+              "z": 9.11559367045318
+            },
+            "intensity": 0,
+            "target": {
+              "y": -30.584380520354753,
+              "z": -0.3038214916611919,
+              "x": -3.7475082440551692
+            },
+            "color": {
+              "r": 0.9372549019607843,
+              "g": 0.9098039215686274,
+              "b": 0.0196078431372549,
+              "a": 1
+            },
+            "helperSize": 0.35,
+            "castShadow": true,
+            "mode": "point",
+            "distance": 101.26582278481013,
+            "angle": 175.95569620253156,
+            "penumbra": 0.7405063291139239,
+            "decay": 0.22784810126582314
+          },
+          "Underwater God Rays": {
+            "position": {
+              "z": 69.6178508338803,
+              "y": 62.02231354235036,
+              "x": 16.468911936798037
+            }
           }
         }
       },
       "sequence": {
         "type": "PositionalSequence",
-        "length": 4,
+        "length": 11.56,
         "subUnitsPerUnit": 30,
         "tracksByObject": {
           "Hero Water Volume": {
@@ -316,8 +354,8 @@
                     "value": 0
                   },
                   {
-                    "id": "xhjUZF6He1",
-                    "position": 1.933,
+                    "id": "_3l0N48xsk",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -348,8 +386,8 @@
                     "value": 8
                   },
                   {
-                    "id": "M4Wa9j3nKP",
-                    "position": 1.933,
+                    "id": "6UDWOrJefv",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -358,7 +396,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -21
+                    "value": -32.271021236902115
                   }
                 ]
               },
@@ -380,8 +418,8 @@
                     "value": 45
                   },
                   {
-                    "id": "Ky0V88npnl",
-                    "position": 1.933,
+                    "id": "8ANiIZ-DN-",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -390,7 +428,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 30
+                    "value": 31.411540739533386
                   }
                 ]
               },
@@ -412,8 +450,8 @@
                     "value": 0
                   },
                   {
-                    "id": "IGjrXxgzs0",
-                    "position": 1.933,
+                    "id": "AT23liNNls",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -444,8 +482,8 @@
                     "value": 0
                   },
                   {
-                    "id": "BFbsOP8mLH",
-                    "position": 1.933,
+                    "id": "8ZQkh9KBaX",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -476,8 +514,8 @@
                     "value": 0
                   },
                   {
-                    "id": "_U3l3W0uB9",
-                    "position": 1.933,
+                    "id": "u1yEoNENfK",
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -508,8 +546,8 @@
                     "value": 45
                   },
                   {
-                    "id": "6kclIGo_vh",
-                    "position": 1.933,
+                    "id": "km_prGVl56",
+                    "position": 7.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -518,7 +556,20 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 45
+                    "value": 29.759493670886105
+                  },
+                  {
+                    "id": "NmeblgLf0p",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 33.05935622616369
                   }
                 ]
               }
@@ -738,7 +789,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"showModel\"]",
                 "keyframes": [
                   {
-                    "id": "iZnCKI5fuh",
+                    "id": "mx5d29ptjg",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -751,38 +802,25 @@
                     "value": true
                   },
                   {
-                    "id": "qKaVug4J50",
-                    "position": 1.1,
+                    "id": "QRNWBR7CNz",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": true
                   },
                   {
                     "id": "sBCfYlVtMu",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": true
-                  },
-                  {
-                    "id": "JaugKhbL6x",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -796,7 +834,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"position\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "THOvaxkSjl",
+                    "id": "WTgqf59WU1",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -809,38 +847,25 @@
                     "value": 0
                   },
                   {
-                    "id": "BC_X6wVTqt",
-                    "position": 1.1,
+                    "id": "StEiTsK4sN",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": 0
                   },
                   {
                     "id": "DTsnkwYZx4",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 0
-                  },
-                  {
-                    "id": "cROs9pJYGB",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -854,7 +879,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"position\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "ZuZRpwakQU",
+                    "id": "cj0RdaPZfi",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -867,43 +892,30 @@
                     "value": 0.5
                   },
                   {
-                    "id": "ypB-Rq-S9u",
-                    "position": 1.1,
+                    "id": "obNKRVsiQ0",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": 0.5
                   },
                   {
                     "id": "l10dJ8quKf",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
                     "type": "bezier",
-                    "value": -32.5
-                  },
-                  {
-                    "id": "lOfDBnanAT",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -32.5
+                    "value": -44.5
                   }
                 ]
               },
@@ -912,7 +924,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"position\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "EQom-yPz-U",
+                    "id": "7HEwwoIOKe",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -925,43 +937,30 @@
                     "value": -14.799999999999997
                   },
                   {
-                    "id": "GO8LlUc9A1",
-                    "position": 1.1,
+                    "id": "Lbx5oLY5Nj",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": -14.799999999999997
                   },
                   {
                     "id": "g4r023DHef",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
                     "type": "bezier",
                     "value": -14.799999999999997
-                  },
-                  {
-                    "id": "YPeefPGJ-g",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -6.799999999999997
                   }
                 ]
               },
@@ -970,7 +969,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"rotation\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "E8lWJyxl0S",
+                    "id": "_vIn-0QNKm",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -983,38 +982,25 @@
                     "value": -1
                   },
                   {
-                    "id": "KgY-MxFk3T",
-                    "position": 1.1,
+                    "id": "OxSvUO_xi-",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": -1
                   },
                   {
                     "id": "pXa3mFmfl5",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": -3
-                  },
-                  {
-                    "id": "C0PeSoz1DE",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -1028,7 +1014,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"rotation\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "HCZ42p6Udw",
+                    "id": "N-eKKymPFI",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1041,43 +1027,30 @@
                     "value": -25
                   },
                   {
-                    "id": "lJdBGsAqfd",
-                    "position": 1.1,
+                    "id": "oZDFLuINqD",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": -25
                   },
                   {
                     "id": "F4in9Y4hrH",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
                     "type": "bezier",
-                    "value": 333
-                  },
-                  {
-                    "id": "PD77tJ5C_x",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 738
+                    "value": 716
                   }
                 ]
               },
@@ -1086,7 +1059,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"rotation\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "Z6EpWLnZj0",
+                    "id": "mAvNMBnPbu",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1099,43 +1072,30 @@
                     "value": 7
                   },
                   {
-                    "id": "VetiE7MV__",
-                    "position": 1.1,
+                    "id": "CqGDhjZwQO",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
                     "value": 7
                   },
                   {
                     "id": "ikN3p6KU0F",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
                     "type": "bezier",
                     "value": -8
-                  },
-                  {
-                    "id": "gfvZ99vV6C",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 9
                   }
                 ]
               },
@@ -1144,7 +1104,7 @@
                 "__debugName": "Lumiere de la Mer Bottle:[\"scale\"]",
                 "keyframes": [
                   {
-                    "id": "eXUS7O-MVb",
+                    "id": "xVfIed5OmY",
                     "position": 0,
                     "connectedRight": true,
                     "handles": [
@@ -1157,38 +1117,25 @@
                     "value": 11
                   },
                   {
-                    "id": "cewnT-KJ17",
-                    "position": 1.1,
+                    "id": "wEBuL3nMPm",
+                    "position": 5.033,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
-                      0.5,
-                      0
+                      0.25,
+                      0.46
                     ],
                     "type": "bezier",
-                    "value": 7
+                    "value": 11
                   },
                   {
                     "id": "OD5d_hy9mz",
-                    "position": 1.6,
+                    "position": 11.4,
                     "connectedRight": true,
                     "handles": [
-                      0.5,
-                      1,
-                      0.5,
-                      0
-                    ],
-                    "type": "bezier",
-                    "value": 7
-                  },
-                  {
-                    "id": "7Wfyj6S_eS",
-                    "position": 1.967,
-                    "connectedRight": true,
-                    "handles": [
-                      0.5,
-                      1,
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -1226,7 +1173,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -4
+                    "value": -1.7218794164581288
                   }
                 ]
               },
@@ -1283,7 +1230,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -29.64404148623648
+                    "value": -222.3189354912414
                   }
                 ]
               },
@@ -1302,7 +1249,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 180
+                    "value": 130
                   }
                 ]
               },
@@ -1321,7 +1268,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 180
+                    "value": 446.7723780653305
                   }
                 ]
               },
@@ -1378,7 +1325,7 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 1
+                    "value": 1.1
                   }
                 ]
               }
@@ -1802,6 +1749,19 @@
                     ],
                     "type": "bezier",
                     "value": -0.5326365310243804
+                  },
+                  {
+                    "id": "_5mrK5yX1a",
+                    "position": 11.367,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -2.605794761211895
                   }
                 ]
               },
@@ -1930,6 +1890,19 @@
                     ],
                     "type": "bezier",
                     "value": 3.3
+                  },
+                  {
+                    "id": "qzka0f9nAG",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 9.30007497445228
                   }
                 ]
               },
@@ -1949,6 +1922,19 @@
                     ],
                     "type": "bezier",
                     "value": 0
+                  },
+                  {
+                    "id": "TyJ9y06DaE",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -22
                   }
                 ]
               },
@@ -1968,6 +1954,32 @@
                     ],
                     "type": "bezier",
                     "value": -10.5
+                  },
+                  {
+                    "id": "aR-LSEPVJZ",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 18.5
+                  },
+                  {
+                    "id": "98wzIPAwzp",
+                    "position": 12.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1.5
                   }
                 ]
               },
@@ -2058,6 +2070,1229 @@
               "[\"rotation\",\"z\"]": "ktTqlP3vtY",
               "[\"scale\"]": "8TfdgWRfwh"
             }
+          },
+          "Helixa Bubble Path": {
+            "trackData": {
+              "PQL3CvbUu3": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"position\",\"x\"]",
+                "keyframes": [
+                  {
+                    "id": "-cvQDxt_V7",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "neYaBezy9v": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"position\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "cbbvS60Rqr",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -37.90661149174514
+                  }
+                ]
+              },
+              "czYNouSIzK": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"position\",\"z\"]",
+                "keyframes": [
+                  {
+                    "id": "2N0yzdweEf",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 16.882076774959444
+                  },
+                  {
+                    "id": "_EinCkxa8Z",
+                    "position": 11.567,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 6.88207970578917
+                  }
+                ]
+              },
+              "6VHnn3IRmd": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"rotation\",\"x\"]",
+                "keyframes": [
+                  {
+                    "id": "G_1aiT163g",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 90
+                  }
+                ]
+              },
+              "kNxDl69Rag": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"rotation\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "kQaLA6L--N",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "_uvEMr__dN": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"rotation\",\"z\"]",
+                "keyframes": [
+                  {
+                    "id": "zkHF337qhL",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 90
+                  }
+                ]
+              },
+              "z5bb8jrP8K": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"scale\",\"x\"]",
+                "keyframes": [
+                  {
+                    "id": "DgeOuE8Ku9",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  }
+                ]
+              },
+              "K8XTOgj7PR": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"scale\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "geti0d2Ntl",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  }
+                ]
+              },
+              "hdwc01VXyt": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Helixa Bubble Path:[\"scale\",\"z\"]",
+                "keyframes": [
+                  {
+                    "id": "qyXY4F01TS",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"position\",\"x\"]": "PQL3CvbUu3",
+              "[\"position\",\"y\"]": "neYaBezy9v",
+              "[\"position\",\"z\"]": "czYNouSIzK",
+              "[\"rotation\",\"x\"]": "6VHnn3IRmd",
+              "[\"rotation\",\"y\"]": "kNxDl69Rag",
+              "[\"rotation\",\"z\"]": "_uvEMr__dN",
+              "[\"scale\",\"x\"]": "z5bb8jrP8K",
+              "[\"scale\",\"y\"]": "K8XTOgj7PR",
+              "[\"scale\",\"z\"]": "hdwc01VXyt"
+            }
+          },
+          "Underwater Theatre Light": {
+            "trackData": {
+              "80QRiHBadg": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"enabled\"]",
+                "keyframes": [
+                  {
+                    "id": "KOBb7A_F8U",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "oXMCWHPy62",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "ORDIoKO2aH",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "SqDp3AITaZ": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"mode\"]",
+                "keyframes": [
+                  {
+                    "id": "yIcvpSpwxM",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": "point"
+                  },
+                  {
+                    "id": "cG8p5wrYFS",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": "point"
+                  },
+                  {
+                    "id": "-joTXcH6YX",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": "spot"
+                  },
+                  {
+                    "id": "XiwFWISdYX",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": "point"
+                  }
+                ]
+              },
+              "UUJV8yPPdz": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"position\",\"x\"]",
+                "keyframes": [
+                  {
+                    "id": "7OqYwWO10r",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.390602917709359
+                  },
+                  {
+                    "id": "LyXJU2Ojfj",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.390602917709359
+                  },
+                  {
+                    "id": "iJ0hw8NQ4s",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.3906029177093595
+                  },
+                  {
+                    "id": "X8WfBueH4p",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.390602917709359
+                  },
+                  {
+                    "id": "tP91vdLedd",
+                    "position": 9.5,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.4924475364558556
+                  },
+                  {
+                    "id": "0IpB2PiUHD",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.4062647215270965
+                  }
+                ]
+              },
+              "FrKFSxs8Yg": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"position\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "61ZxRSK9Az",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -19.191074583059855
+                  },
+                  {
+                    "id": "tJgb1ukr0B",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -19.191074583059855
+                  },
+                  {
+                    "id": "Se2xsnbUou",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -19.191074583059837
+                  },
+                  {
+                    "id": "-inSen6zUe",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -19.191074583059855
+                  },
+                  {
+                    "id": "f-buePFSuf",
+                    "position": 9.5,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -26.872815140923827
+                  },
+                  {
+                    "id": "ljsmef2onZ",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -22.98884322882482
+                  }
+                ]
+              },
+              "q6J2E0PRJL": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"position\",\"z\"]",
+                "keyframes": [
+                  {
+                    "id": "TQxH8NFiPN",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 9.11559367045318
+                  },
+                  {
+                    "id": "DRUn5lPs0U",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 9.11559367045318
+                  },
+                  {
+                    "id": "xtvL2p5kTg",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 21.528596664478837
+                  },
+                  {
+                    "id": "jaihYgP7fZ",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 9.11559367045318
+                  },
+                  {
+                    "id": "oJzCgjUESQ",
+                    "position": 9.5,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 9.024826984707332
+                  },
+                  {
+                    "id": "ZqH7Re0ccJ",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 5.317825024688231
+                  }
+                ]
+              },
+              "48_2OI2Jw9": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"target\",\"x\"]",
+                "keyframes": [
+                  {
+                    "id": "QVOHsqC_bN",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.7475082440551692
+                  },
+                  {
+                    "id": "OdAb4Ulbmv",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.7475082440551692
+                  },
+                  {
+                    "id": "HaSTIt5FOI",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 34.221168148309346
+                  },
+                  {
+                    "id": "F73IKkO4NM",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -3.7475082440551692
+                  }
+                ]
+              },
+              "YtoABulr4-": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"target\",\"y\"]",
+                "keyframes": [
+                  {
+                    "id": "LcgZ9c1Td6",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -30.584380520354753
+                  },
+                  {
+                    "id": "bUnoYyhgKs",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -30.584380520354753
+                  },
+                  {
+                    "id": "-WPVfIS1Gm",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 29.124133956008766
+                  },
+                  {
+                    "id": "nBGdM9G61y",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -30.584380520354753
+                  },
+                  {
+                    "id": "kc29nFV96J",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -24.044627084700753
+                  }
+                ]
+              },
+              "owrlkUoILG": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"target\",\"z\"]",
+                "keyframes": [
+                  {
+                    "id": "FSFRzfxHPB",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -0.3038214916611919
+                  },
+                  {
+                    "id": "r44rmfhBwb",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -0.3038214916611919
+                  },
+                  {
+                    "id": "0eW0M2Qwer",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -36.719671247538685
+                  },
+                  {
+                    "id": "dYFdF1Qywg",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -0.3038214916611919
+                  },
+                  {
+                    "id": "EPuqMXKmMQ",
+                    "position": 11.4,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 14.887253091398662
+                  }
+                ]
+              },
+              "WQHo5D89MN": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"color\"]",
+                "keyframes": [
+                  {
+                    "id": "29ocygI_7a",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.937254933782579,
+                      "g": 0.9098039062749204,
+                      "b": 0.01960645918509022,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "zk0iZleGYC",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.9372549019607843,
+                      "g": 0.9098039215686274,
+                      "b": 0.0196078431372549,
+                      "a": 1
+                    }
+                  },
+                  {
+                    "id": "JxMh6bW5uZ",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": {
+                      "r": 0.9372549019607843,
+                      "g": 0.9098039215686274,
+                      "b": 0.0196078431372549,
+                      "a": 1
+                    }
+                  }
+                ]
+              },
+              "MLvQVKfrMy": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"intensity\"]",
+                "keyframes": [
+                  {
+                    "id": "Bjp8Se1u95",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "axtnG_fnja",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "HN2lp7nip-",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 148.73417721518985
+                  },
+                  {
+                    "id": "UWtjrXocg8",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  }
+                ]
+              },
+              "ijn8YUs6kj": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"distance\"]",
+                "keyframes": [
+                  {
+                    "id": "wjhj69QkzP",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 101.26582278481013
+                  },
+                  {
+                    "id": "K0GdQyVy0N",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 101.26582278481013
+                  },
+                  {
+                    "id": "Bo0BC0BKeI",
+                    "position": 8.867,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 278.48101265822794
+                  },
+                  {
+                    "id": "fVgx6-XUqA",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 101.26582278481013
+                  }
+                ]
+              },
+              "pCqhA5ibM1": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"angle\"]",
+                "keyframes": [
+                  {
+                    "id": "Fdox_1NINF",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 175.95569620253156
+                  },
+                  {
+                    "id": "B88D7cFw6C",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 175.95569620253156
+                  },
+                  {
+                    "id": "6z7FUiemX4",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 175.95569620253156
+                  }
+                ]
+              },
+              "Wz0qEgWRZj": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"penumbra\"]",
+                "keyframes": [
+                  {
+                    "id": "2MP2nvnNYp",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.7405063291139239
+                  },
+                  {
+                    "id": "q3FP10A_4C",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.7405063291139239
+                  },
+                  {
+                    "id": "ljvZofJ0Jl",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.7405063291139239
+                  }
+                ]
+              },
+              "YpukrXI_JD": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"decay\"]",
+                "keyframes": [
+                  {
+                    "id": "9rptkqlbEN",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.22784810126582314
+                  },
+                  {
+                    "id": "uubOJcaY31",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.22784810126582314
+                  },
+                  {
+                    "id": "BsRmStKLL1",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.22784810126582314
+                  }
+                ]
+              },
+              "Sx4e6MNiNU": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"castShadow\"]",
+                "keyframes": [
+                  {
+                    "id": "QJA_4Gd-XN",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "ZENRqLWyTa",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "TqwbOdgQ6B",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "wBFC6uo_2e": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"showHelper\"]",
+                "keyframes": [
+                  {
+                    "id": "WVX_hAmzd0",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "FQacOCZW56",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  },
+                  {
+                    "id": "MIYGtN3BYW",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": true
+                  }
+                ]
+              },
+              "sOnmN2cGop": {
+                "type": "BasicKeyframedTrack",
+                "__debugName": "Underwater Theatre Light:[\"helperSize\"]",
+                "keyframes": [
+                  {
+                    "id": "cbkmTvUWDq",
+                    "position": 0,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.35
+                  },
+                  {
+                    "id": "TlPAjMFCBp",
+                    "position": 6,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.35
+                  },
+                  {
+                    "id": "FIGn8TOyhh",
+                    "position": 9.233,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0.35
+                  }
+                ]
+              }
+            },
+            "trackIdByPropPath": {
+              "[\"enabled\"]": "80QRiHBadg",
+              "[\"mode\"]": "SqDp3AITaZ",
+              "[\"position\",\"x\"]": "UUJV8yPPdz",
+              "[\"position\",\"y\"]": "FrKFSxs8Yg",
+              "[\"position\",\"z\"]": "q6J2E0PRJL",
+              "[\"target\",\"x\"]": "48_2OI2Jw9",
+              "[\"target\",\"y\"]": "YtoABulr4-",
+              "[\"target\",\"z\"]": "owrlkUoILG",
+              "[\"color\"]": "WQHo5D89MN",
+              "[\"intensity\"]": "MLvQVKfrMy",
+              "[\"distance\"]": "ijn8YUs6kj",
+              "[\"angle\"]": "pCqhA5ibM1",
+              "[\"penumbra\"]": "Wz0qEgWRZj",
+              "[\"decay\"]": "YpukrXI_JD",
+              "[\"castShadow\"]": "Sx4e6MNiNU",
+              "[\"showHelper\"]": "wBFC6uo_2e",
+              "[\"helperSize\"]": "sOnmN2cGop"
+            }
           }
         }
       }
@@ -2065,6 +3300,14 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
+    "Lm42J5aOObIRy7rH",
+    "Smmkv5EVi7oC39p1",
+    "9AOhxYJR6h_HeGij",
+    "b1NsbnMim7Ja0ISa",
+    "Ot8m8PLFFl8To6ky",
+    "CYvmyzb0PG1xddZv",
+    "3jMhdhGesQOPqZ7F",
+    "-z7InEQKtumLWk3b",
     "9xCnrLg_li0-72VX",
     "srtprNsrFpvioi0K",
     "lvZ2DRLnxFnTHgec",

@@ -2,19 +2,23 @@
 
 import type { ISheet } from "@theatre/core";
 import HeroBottleStage from "./HeroBottleStage";
+import HelixaBubblePathStage from "./HelixaBubblePathStage";
 import HelixPetalFlowStage from "./HelixPetalFlowStage";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
 import HeroWaterStage from "./HeroWaterStage";
 import LumiereBottleStage from "./LumiereBottleStage";
 import SketchModelsStage from "./SketchModelsStage";
+// import ImagePlane from "./ImagePlane";
+
 import SkyImageBackground from "@/src/waterpro/environment/SkyImageBackground.jsx";
+
 
 type HeroStageSceneProps = {
   settings: HeroBottleSettings;
   theatreSheet: ISheet;
 };
 
-export default function HeroStageScene({
+export default function HeroStageScene({ 
   settings,
   theatreSheet,
 }: HeroStageSceneProps) {
@@ -25,7 +29,11 @@ export default function HeroStageScene({
       <HeroBottleStage settings={settings} theatreSheet={theatreSheet} />
       <LumiereBottleStage theatreSheet={theatreSheet} />
       <HelixPetalFlowStage theatreSheet={theatreSheet} />
+      <HelixaBubblePathStage theatreSheet={theatreSheet} />
       <SketchModelsStage theatreSheet={theatreSheet} />
+      {/* <ImagePlane url="/door.png" theatreSheet={theatreSheet} /> */}
+
+
     </>
   );
 }

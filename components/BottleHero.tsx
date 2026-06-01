@@ -379,8 +379,7 @@ export default function BottleHero() {
   useTheatreStudio();
   const [productionTheatreState, setProductionTheatreState] =
     useState<TheatreState | null>(null);
-  const [isTheatreStateReady, setIsTheatreStateReady] =
-    useState(isDevelopment);
+  const [isTheatreStateReady, setIsTheatreStateReady] = useState(false);
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollContentRef = useRef<HTMLDivElement>(null);
   const theatreRuntime = isTheatreStateReady
@@ -390,11 +389,19 @@ export default function BottleHero() {
     : null;
 
   useEffect(() => {
-    if (isDevelopment) {
-      return undefined;
-    }
-
     let isActive = true;
+
+    if (isDevelopment) {
+      void getTheatreStudio().finally(() => {
+        if (isActive) {
+          setIsTheatreStateReady(true);
+        }
+      });
+
+      return () => {
+        isActive = false;
+      };
+    }
 
     async function loadTheatreState() {
       try {
@@ -447,7 +454,7 @@ export default function BottleHero() {
               shadows
             >
               <Scene theatreSheet={theatreRuntime.sheet} />
-            </Canvas>
+            </Canvas>  
           </div>
           <TheatreScrollSmoother
             theatreSheet={theatreRuntime.sheet}

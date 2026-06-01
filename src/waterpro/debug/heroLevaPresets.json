@@ -7,7 +7,7 @@
         "bottleY": 0.17000000000000004,
         "bottleZ": -14.030000000000001,
         "bottleScale": 1.08,
-        "bottleOpacity": 0.72
+        "bottleOpacity": 1
       },
       "skyBackground": {
         "enabled": true,

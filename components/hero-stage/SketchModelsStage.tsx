@@ -86,16 +86,16 @@ function createSketchModelTheatreConfig(model: SketchModelDefinition) {
   return {
     showModel: types.boolean(true),
     position: {
-      x: types.number(model.defaultPosition.x, { range: [-24, 24] }),
-      y: types.number(model.defaultPosition.y, { range: [-24, 24] }),
-      z: types.number(model.defaultPosition.z, { range: [-48, 12] }),
+      x: types.number(model.defaultPosition.x),
+      y: types.number(model.defaultPosition.y),
+      z: types.number(model.defaultPosition.z),
     },
     rotation: {
-      x: types.number(model.defaultRotation.x, { range: [-360, 360] }),
-      y: types.number(model.defaultRotation.y, { range: [-360, 360] }),
-      z: types.number(model.defaultRotation.z, { range: [-360, 360] }),
+      x: types.number(model.defaultRotation.x),
+      y: types.number(model.defaultRotation.y),
+      z: types.number(model.defaultRotation.z),
     },
-    scale: types.number(model.defaultScale, { range: [0.01, 30] }),
+    scale: types.number(model.defaultScale),
   };
 }
 

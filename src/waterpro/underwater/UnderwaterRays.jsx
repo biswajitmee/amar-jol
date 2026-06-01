@@ -6,6 +6,9 @@ import {
   AdditiveBlending,
   Color,
   DoubleSide,
+  DynamicDrawUsage,
+  MathUtils,
+  Object3D,
   ShaderMaterial,
   Vector3,
 } from "three";
@@ -23,6 +26,7 @@ function makeMaterial(controls) {
       uSpread: { value: controls.raySpread },
       uSpeed: { value: controls.raySpeed },
       uDepthFade: { value: controls.rayDepthFade },
+      uLightMargin: { value: controls.rayLightMargin },
     },
     vertexShader,
     fragmentShader,
@@ -35,6 +39,60 @@ function makeMaterial(controls) {
   });
 }
 
+const MAX_RAY_DENSITY = 96;
+const RAY_RADIAL_SEGMENTS = 10;
+const RAY_HEIGHT_SEGMENTS = 20;
+
+function clampNumber(value, fallback, min, max) {
+  const numeric = Number(value);
+
+  if (!Number.isFinite(numeric)) {
+    return fallback;
+  }
+
+  return MathUtils.clamp(numeric, min, max);
+}
+
+function hash01(index, salt = 0) {
+  const value = Math.sin(index * 127.1 + salt * 311.7) * 43758.5453123;
+
+  return value - Math.floor(value);
+}
+
+function makeInstanceAttributes() {
+  const seeds = new Float32Array(MAX_RAY_DENSITY);
+  const alphas = new Float32Array(MAX_RAY_DENSITY);
+
+  for (let index = 0; index < MAX_RAY_DENSITY; index += 1) {
+    seeds[index] = hash01(index, 4.2);
+    alphas[index] = 0.62 + hash01(index, 9.7) * 0.38;
+  }
+
+  return { seeds, alphas };
+}
+
+function makeRayLayout(rayCount, controls, width, depth) {
+  const margin = Math.max(0, controls.rayLightMargin ?? 0);
+  const spread = Math.max(0.05, controls.raySpread ?? 1);
+  const scale = Math.max(0.05, controls.rayScale ?? 1);
+  const radiusX = Math.max(0.04, width * 0.5 * scale - margin);
+  const radiusZ = Math.max(0.04, depth * 0.5 * scale - margin);
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+  return Array.from({ length: rayCount }, (_, index) => {
+    const normalized = (index + 0.5) / Math.max(1, rayCount);
+    const radius = Math.sqrt(normalized);
+    const angle = index * goldenAngle + hash01(index, 2.6) * 0.42;
+    const jitter = 0.72 + hash01(index, 7.4) * 0.34;
+    const x = Math.cos(angle) * radiusX * radius * spread * jitter;
+    const z = Math.sin(angle) * radiusZ * radius * spread * jitter;
+    const roll = (hash01(index, 5.2) - 0.5) * 0.28;
+    const widthScale = 0.76 + hash01(index, 8.8) * 0.52;
+
+    return { x, z, roll, widthScale };
+  });
+}
+
 export default function UnderwaterRays({
   reflectionRef,
   controls,
@@ -43,10 +101,14 @@ export default function UnderwaterRays({
   width,
   depth,
   enabled = true,
+  theatreTransform = null,
 }) {
   const { camera } = useThree();
+  const groupRef = useRef(null);
   const meshRef = useRef(null);
+  const dummy = useMemo(() => new Object3D(), []);
   const material = useMemo(() => makeMaterial(controls), []);
+  const instanceAttributes = useMemo(() => makeInstanceAttributes(), []);
   const setMeshRef = useCallback(
     (node) => {
       meshRef.current = node;
@@ -67,7 +129,27 @@ export default function UnderwaterRays({
     [],
   );
   const rayLength = Math.max(1, controls.rayLength);
-  const rayWidth = Math.max(width * 1.7 * controls.rayScale, width + 1.5);
+  const rayCount = Math.round(
+    clampNumber(controls.rayDensity, 18, 1, MAX_RAY_DENSITY),
+  );
+  const topRadius = clampNumber(controls.rayTopRadius, 0.035, 0.001, 2);
+  const bottomRadius = clampNumber(controls.rayBottomRadius, 0.38, 0.01, 5);
+  const rayLayout = useMemo(
+    () => makeRayLayout(rayCount, controls, width, depth),
+    [
+      controls.rayLightMargin,
+      controls.rayScale,
+      controls.raySpread,
+      depth,
+      rayCount,
+      width,
+    ],
+  );
+  const geometryKey = [
+    rayLength.toFixed(3),
+    topRadius.toFixed(3),
+    bottomRadius.toFixed(3),
+  ].join(":");
 
   useEffect(() => {
     return () => {
@@ -75,23 +157,45 @@ export default function UnderwaterRays({
     };
   }, [material]);
 
+  useEffect(() => {
+    const mesh = meshRef.current;
+
+    if (!mesh) {
+      return;
+    }
+
+    mesh.count = rayCount;
+    mesh.instanceMatrix.setUsage(DynamicDrawUsage);
+
+    rayLayout.forEach((ray, index) => {
+      dummy.position.set(ray.x, 0, ray.z);
+      dummy.rotation.set(0, 0, ray.roll);
+      dummy.scale.set(ray.widthScale, 1, ray.widthScale);
+      dummy.updateMatrix();
+      mesh.setMatrixAt(index, dummy.matrix);
+    });
+
+    mesh.instanceMatrix.needsUpdate = true;
+  }, [dummy, geometryKey, rayCount, rayLayout]);
+
   useFrame(({ clock }) => {
+    const group = groupRef.current;
     const mesh = meshRef.current;
     const waterGroup = waterGroupRef?.current;
     const uniforms = material.uniforms;
 
-    if (!mesh || !waterGroup) {
+    if (!group || !mesh || !waterGroup) {
       return;
     }
 
-    mesh.visible = Boolean(
+    group.visible = Boolean(
       enabled &&
         controls.enabled &&
         controls.raysEnabled &&
         !controls.hideRays,
     );
 
-    if (!mesh.visible) {
+    if (!group.visible) {
       return;
     }
 
@@ -109,12 +213,37 @@ export default function UnderwaterRays({
     const state = underwaterStateRef.current;
     const waterVisibility = Math.max(0.52, state.underwaterBlend);
 
-    mesh.position.set(
-      controls.rayOriginX,
-      -rayLength * 0.5 + controls.rayOriginY,
-      edgeSign * (depth * 0.5 + 0.06) + controls.rayOriginZ,
-    );
-    mesh.rotation.z = Math.atan2(controls.rayDirectionX, Math.abs(controls.rayDirectionY)) * 0.32;
+    if (theatreTransform?.position) {
+      group.position.set(
+        theatreTransform.position[0],
+        theatreTransform.position[1],
+        theatreTransform.position[2],
+      );
+    } else {
+      group.position.set(
+        controls.rayOriginX,
+        controls.rayOriginY,
+        edgeSign * (depth * 0.5 + 0.06) + controls.rayOriginZ,
+      );
+    }
+
+    if (theatreTransform?.rotation) {
+      group.rotation.set(
+        theatreTransform.rotation[0],
+        theatreTransform.rotation[1],
+        theatreTransform.rotation[2],
+      );
+    } else {
+      group.rotation.set(
+        0,
+        0,
+        Math.atan2(controls.rayDirectionX, Math.abs(controls.rayDirectionY)) *
+          0.32,
+      );
+    }
+
+    mesh.position.set(0, -rayLength * 0.5, 0);
+    mesh.rotation.set(0, 0, 0);
 
     uniforms.uTime.value = controls.freezeUnderwaterTime ? 0 : clock.elapsedTime;
     uniforms.uRayLength.value = rayLength;
@@ -124,6 +253,7 @@ export default function UnderwaterRays({
     uniforms.uSpread.value = controls.raySpread;
     uniforms.uSpeed.value = controls.raySpeed;
     uniforms.uDepthFade.value = controls.rayDepthFade;
+    uniforms.uLightMargin.value = controls.rayLightMargin ?? 0;
   });
 
   if (!enabled || !controls.enabled || !controls.raysEnabled || controls.hideRays) {
@@ -131,9 +261,35 @@ export default function UnderwaterRays({
   }
 
   return (
-    <mesh ref={setMeshRef} renderOrder={12} frustumCulled={false}>
-      <planeGeometry args={[rayWidth, rayLength, 1, 48]} />
-      <primitive attach="material" object={material} />
-    </mesh>
+    <group ref={groupRef} name="WaterPro.UnderwaterGodRays">
+      <instancedMesh
+        ref={setMeshRef}
+        args={[null, null, MAX_RAY_DENSITY]}
+        renderOrder={12}
+        frustumCulled={false}
+      >
+        <cylinderGeometry
+          key={geometryKey}
+          args={[
+            topRadius,
+            bottomRadius,
+            rayLength,
+            RAY_RADIAL_SEGMENTS,
+            RAY_HEIGHT_SEGMENTS,
+            true,
+          ]}
+        >
+          <instancedBufferAttribute
+            attach="attributes-aRaySeed"
+            args={[instanceAttributes.seeds, 1]}
+          />
+          <instancedBufferAttribute
+            attach="attributes-aRayAlpha"
+            args={[instanceAttributes.alphas, 1]}
+          />
+        </cylinderGeometry>
+        <primitive attach="material" object={material} />
+      </instancedMesh>
+    </group>
   );
 }
