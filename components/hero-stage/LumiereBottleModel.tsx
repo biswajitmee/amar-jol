@@ -4,7 +4,12 @@ import { useLoader } from "@react-three/fiber";
 import { useMemo } from "react";
 import {
   Box3,
+  Color,
   MathUtils,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  type Material,
   Object3D,
   Vector3,
   type Group,
@@ -29,6 +34,39 @@ type PreparedModel = {
   scene: Group;
 };
 
+function makeLightReactiveMaterial(material: Material): Material {
+  if (!(material instanceof MeshBasicMaterial)) {
+    const litMaterial = material.clone();
+    litMaterial.needsUpdate = true;
+
+    return litMaterial;
+  }
+
+  const source = material as MeshBasicMaterial & Record<string, any>;
+  const litMaterial = new MeshStandardMaterial({
+    name: material.name,
+    color: source.color?.clone?.() ?? new Color("#ffffff"),
+    map: source.map ?? null,
+    alphaMap: source.alphaMap ?? null,
+    aoMap: source.aoMap ?? null,
+    emissive: source.emissive?.clone?.() ?? new Color("#000000"),
+    emissiveMap: source.emissiveMap ?? null,
+    emissiveIntensity: source.emissiveIntensity ?? 0,
+    transparent: material.transparent,
+    opacity: material.opacity,
+    alphaTest: material.alphaTest,
+    side: material.side,
+    roughness: 0.32,
+    metalness: 0.03,
+  });
+
+  litMaterial.toneMapped = true;
+  litMaterial.envMapIntensity = 0.85;
+  litMaterial.needsUpdate = true;
+
+  return litMaterial;
+}
+
 function prepareModel(scene: Group): PreparedModel {
   const clone = scene.clone(true);
   const bounds = new Box3().setFromObject(clone);
@@ -40,6 +78,12 @@ function prepareModel(scene: Group): PreparedModel {
   clone.traverse((child: Object3D) => {
     child.castShadow = true;
     child.receiveShadow = true;
+
+    if (child instanceof Mesh) {
+      child.material = Array.isArray(child.material)
+        ? child.material.map((material) => makeLightReactiveMaterial(material))
+        : makeLightReactiveMaterial(child.material);
+    }
   });
 
   return {

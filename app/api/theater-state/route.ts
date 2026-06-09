@@ -1,9 +1,16 @@
 import { promises as fs } from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
-import theaterState from "@/theaterstate.json";
+import theaterState from "./Water Hero Screen.theatre-project-state.json";
 
-const theaterStateFilePath = path.join(process.cwd(), "theaterstate.json");
+const theaterStateFileName = "Water Hero Screen.theatre-project-state.json";
+const theaterStateFilePath = path.join(
+  process.cwd(),
+  "app",
+  "api",
+  "theater-state",
+  theaterStateFileName,
+);
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -53,6 +60,6 @@ export async function POST(request: Request) {
 
   return NextResponse.json({
     ok: true,
-    file: "theaterstate.json",
+    file: `app/api/theater-state/${theaterStateFileName}`,
   });
 }

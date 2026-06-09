@@ -6,6 +6,7 @@ import HelixaBubblePathStage from "./HelixaBubblePathStage";
 import HelixPetalFlowStage from "./HelixPetalFlowStage";
 import type { HeroBottleSettings } from "./HeroBottleTypes";
 import HeroWaterStage from "./HeroWaterStage";
+import ImportedBiswajitStage from "./ImportedBiswajitStage";
 import LumiereBottleStage from "./LumiereBottleStage";
 import SketchModelsStage from "./SketchModelsStage";
 // import ImagePlane from "./ImagePlane";
@@ -31,6 +32,7 @@ export default function HeroStageScene({
       <HelixPetalFlowStage theatreSheet={theatreSheet} />
       <HelixaBubblePathStage theatreSheet={theatreSheet} />
       <SketchModelsStage theatreSheet={theatreSheet} />
+      <ImportedBiswajitStage theatreSheet={theatreSheet} />
       {/* <ImagePlane url="/door.png" theatreSheet={theatreSheet} /> */}
 
 

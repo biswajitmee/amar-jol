@@ -28,7 +28,8 @@ import {
 import HeroLightingRig from "@/components/hero-stage/HeroLightingRig";
 import HeroStageWorld from "@/components/hero-stage/HeroStageWorld";
 import HeroLevaPresetPanel from "@/src/waterpro/debug/HeroLevaPresetPanel.jsx";
-import theaterState from "@/theaterstate.json";
+import CursorFluidEffect from "@/src/components/effects/CursorFluidEffect/CursorFluidEffect";
+import theaterState from "@/app/api/theater-state/Water Hero Screen.theatre-project-state.json";
 
 const PROJECT_ID = "Water Hero Screen";
 const SHEET_ID = "Hero Camera";
@@ -72,7 +73,7 @@ if (isDevelopment && typeof window !== "undefined") {
 }
 
 function getTheatreRuntime(state?: TheatreState) {
-  const projectConfig = isDevelopment || !state ? {} : { state };
+  const projectConfig = state ? { state } : {};
   const project =
     theatreCacheGlobal.__waterHeroProject ??
     getProject(PROJECT_ID, projectConfig);
@@ -371,6 +372,7 @@ function Scene({ theatreSheet }: { theatreSheet: ISheet }) {
       <TheatreCameraRig theatreSheet={theatreSheet} />
       <HeroStageWorld theatreSheet={theatreSheet} />
       {process.env.NODE_ENV === "development" ? <HeroLevaPresetPanel /> : null}
+      <CursorFluidEffect />
     </>
   );
 }
@@ -383,28 +385,17 @@ export default function BottleHero() {
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollContentRef = useRef<HTMLDivElement>(null);
   const theatreRuntime = isTheatreStateReady
-    ? getTheatreRuntime(
-        isDevelopment ? undefined : productionTheatreState ?? theaterState,
-      )
+    ? getTheatreRuntime(productionTheatreState ?? theaterState)
     : null;
 
   useEffect(() => {
     let isActive = true;
 
-    if (isDevelopment) {
-      void getTheatreStudio().finally(() => {
-        if (isActive) {
-          setIsTheatreStateReady(true);
-        }
-      });
-
-      return () => {
-        isActive = false;
-      };
-    }
-
     async function loadTheatreState() {
       try {
+        const studioPromise = isDevelopment
+          ? getTheatreStudio()
+          : Promise.resolve(null);
         const response = await fetch(THEATRE_STATE_API, {
           cache: "no-store",
         });
@@ -414,6 +405,7 @@ export default function BottleHero() {
         }
 
         const state = (await response.json()) as TheatreState;
+        await studioPromise;
 
         if (isActive) {
           setProductionTheatreState(state);
@@ -445,12 +437,18 @@ export default function BottleHero() {
           <div className="z-0 fixed inset-0">
             <Canvas
               className="absolute inset-0"
+              dpr={[1, 1.25]}
               camera={{
                 position: [0, 1.92, 8.6],
                 rotation: [MathUtils.degToRad(8.5), 0, 0],
                 fov: 45,
               }}
-              gl={{ preserveDrawingBuffer: true }}
+              gl={{
+                antialias: false,
+                failIfMajorPerformanceCaveat: false,
+                powerPreference: "high-performance",
+                preserveDrawingBuffer: false,
+              }}
               shadows
             >
               <Scene theatreSheet={theatreRuntime.sheet} />

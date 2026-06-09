@@ -2078,12 +2078,38 @@
                 "__debugName": "Helixa Bubble Path:[\"position\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "-cvQDxt_V7",
-                    "position": 0,
+                    "id": "V8ORhDg_9-",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "B_L7oaFBKN",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "XLFcCOU2e_",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2097,8 +2123,8 @@
                 "__debugName": "Helixa Bubble Path:[\"position\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "cbbvS60Rqr",
-                    "position": 0,
+                    "id": "NI2gYpfGkh",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -2107,7 +2133,33 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": -37.90661149174514
+                    "value": 48.5
+                  },
+                  {
+                    "id": "NnF-wLH_9p",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": -12
+                  },
+                  {
+                    "id": "E51mNK1xmB",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -38.49089590960692
                   }
                 ]
               },
@@ -2116,8 +2168,8 @@
                 "__debugName": "Helixa Bubble Path:[\"position\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "2N0yzdweEf",
-                    "position": 0,
+                    "id": "KXs97NtHnl",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
@@ -2126,20 +2178,33 @@
                       0
                     ],
                     "type": "bezier",
-                    "value": 16.882076774959444
+                    "value": -14.799999999999997
                   },
                   {
-                    "id": "_EinCkxa8Z",
-                    "position": 11.567,
+                    "id": "DiP9caPkK1",
+                    "position": 5.833,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 20
+                  },
+                  {
+                    "id": "ro6ilBE_I2",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
                     "type": "bezier",
-                    "value": 6.88207970578917
+                    "value": 15
                   }
                 ]
               },
@@ -2148,12 +2213,38 @@
                 "__debugName": "Helixa Bubble Path:[\"rotation\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "G_1aiT163g",
-                    "position": 0,
+                    "id": "bk4nFr1jfA",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -1
+                  },
+                  {
+                    "id": "IiB_8fU-gw",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "WhMDYnnAZQ",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2167,12 +2258,38 @@
                 "__debugName": "Helixa Bubble Path:[\"rotation\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "kQaLA6L--N",
-                    "position": 0,
+                    "id": "j73Mks7b23",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": -25
+                  },
+                  {
+                    "id": "qI6qIjtQ_5",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 0
+                  },
+                  {
+                    "id": "b1KQnUbJ3j",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2186,12 +2303,38 @@
                 "__debugName": "Helixa Bubble Path:[\"rotation\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "zkHF337qhL",
-                    "position": 0,
+                    "id": "HVW2s8uZlw",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 7
+                  },
+                  {
+                    "id": "_6jciVYFBt",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 90
+                  },
+                  {
+                    "id": "Cb27I6Idls",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2205,12 +2348,38 @@
                 "__debugName": "Helixa Bubble Path:[\"scale\",\"x\"]",
                 "keyframes": [
                   {
-                    "id": "DgeOuE8Ku9",
-                    "position": 0,
+                    "id": "9g9VHf9lvn",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "MhSsrtcPCu",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "u_MdhoCKsv",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2224,12 +2393,38 @@
                 "__debugName": "Helixa Bubble Path:[\"scale\",\"y\"]",
                 "keyframes": [
                   {
-                    "id": "geti0d2Ntl",
-                    "position": 0,
+                    "id": "Ht8_2Pbp4q",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "8dkjIDBata",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "K9NqgYXQz3",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -2243,12 +2438,38 @@
                 "__debugName": "Helixa Bubble Path:[\"scale\",\"z\"]",
                 "keyframes": [
                   {
-                    "id": "qyXY4F01TS",
-                    "position": 0,
+                    "id": "f-YQV-8JAi",
+                    "position": 5.7,
                     "connectedRight": true,
                     "handles": [
                       0.5,
                       1,
+                      0.5,
+                      0
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "JPCSpnnOPN",
+                    "position": 5.833,
+                    "connectedRight": true,
+                    "handles": [
+                      0.5,
+                      1,
+                      0.25,
+                      0.46
+                    ],
+                    "type": "bezier",
+                    "value": 1
+                  },
+                  {
+                    "id": "FjFFjRS3v7",
+                    "position": 11.433,
+                    "connectedRight": true,
+                    "handles": [
+                      0.45,
+                      0.94,
                       0.5,
                       0
                     ],
@@ -3300,9 +3521,6 @@
   },
   "definitionVersion": "0.4.0",
   "revisionHistory": [
-    "Lm42J5aOObIRy7rH",
-    "Smmkv5EVi7oC39p1",
-    "9AOhxYJR6h_HeGij",
     "b1NsbnMim7Ja0ISa",
     "Ot8m8PLFFl8To6ky",
     "CYvmyzb0PG1xddZv",

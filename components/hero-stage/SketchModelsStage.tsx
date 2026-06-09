@@ -147,11 +147,15 @@ function SketchModelStage({
     return unsubscribe;
   }, [sketchModelObject]);
 
+  if (!theatreValues.showModel) {
+    return null;
+  }
+
   return (
     <Suspense fallback={null}>
       <SketchModel
         modelUrl={model.url}
-        visible={theatreValues.showModel}
+        visible
         position={vectorToArray(theatreValues.position)}
         rotation={vectorToArray(theatreValues.rotation)}
         scale={theatreValues.scale}
@@ -177,5 +181,3 @@ export default function SketchModelsStage({
     </>
   );
 }
-
-sketchModels.forEach((model) => preloadSketchModel(model.url));

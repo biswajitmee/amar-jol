@@ -359,6 +359,7 @@ function SkyImageBackgroundControls({
 }
 
 function SkyImageBackgroundMesh({ controls }) {
+  const { scene } = useThree();
   const texture = useManagedTexture(
     controls.skyTexturePath,
     controls.horizonOffset,
@@ -378,6 +379,18 @@ function SkyImageBackgroundMesh({ controls }) {
       geometry.dispose();
     };
   }, [geometry]);
+
+  useEffect(() => {
+    const previousBackground = scene.background;
+
+    scene.background = controls.enabled && texture ? texture : previousBackground;
+
+    return () => {
+      if (scene.background === texture) {
+        scene.background = previousBackground;
+      }
+    };
+  }, [controls.enabled, scene, texture]);
 
   if (!controls.enabled || !texture) {
     return null;
