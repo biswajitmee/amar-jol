@@ -24,6 +24,7 @@ type HeroSceneLoaderProps = {
 };
 
 const MIN_LOADER_MS = 1200;
+const MAX_LOADER_MS = 9000;
 
 const PRELOAD_ASSETS: PreloadAsset[] = [
   { url: "/api/theater-state", weight: 0.7 },
@@ -176,22 +177,30 @@ export function useSceneLoaderGate({
 }) {
   const { active, progress } = useProgress();
   const [minimumPassed, setMinimumPassed] = useState(false);
+  const [maximumPassed, setMaximumPassed] = useState(false);
 
   useEffect(() => {
-    const timeout = window.setTimeout(() => {
+    const minimumTimeout = window.setTimeout(() => {
       setMinimumPassed(true);
     }, MIN_LOADER_MS);
+    const maximumTimeout = window.setTimeout(() => {
+      setMaximumPassed(true);
+    }, MAX_LOADER_MS);
 
-    return () => window.clearTimeout(timeout);
+    return () => {
+      window.clearTimeout(minimumTimeout);
+      window.clearTimeout(maximumTimeout);
+    };
   }, []);
 
   return {
     r3fProgress: progress,
     complete:
-      preloadDone &&
-      sceneReady &&
-      minimumPassed &&
-      (!active || progress >= 99.5),
+      (preloadDone &&
+        sceneReady &&
+        minimumPassed &&
+        (!active || progress >= 99.5)) ||
+      maximumPassed,
   };
 }
 

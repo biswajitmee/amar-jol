@@ -19,9 +19,23 @@ body {
   overscroll-behavior-y: none;
 }
 
+html {
+  scroll-behavior: auto;
+}
+
+::selection {
+  background: rgba(255, 209, 198, 0.35);
+  color: #fff9f4;
+}
+
 button,
 input,
 textarea,
 select {
   font: inherit;
+}
+
+.font-display {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
 }
