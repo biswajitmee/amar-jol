@@ -10,6 +10,7 @@ import {
 } from "@theatre/core";
 import { button, folder, Leva, useControls } from "leva";
 import {
+  Suspense,
   useCallback,
   useEffect,
   useRef,
@@ -27,6 +28,10 @@ import {
 } from "three";
 import HeroLightingRig from "@/components/hero-stage/HeroLightingRig";
 import HeroStageWorld from "@/components/hero-stage/HeroStageWorld";
+import HeroSceneLoader, {
+  useHeroScenePreloader,
+  useSceneLoaderGate,
+} from "@/components/hero-stage/HeroSceneLoader";
 import HeroLevaPresetPanel from "@/src/waterpro/debug/HeroLevaPresetPanel.jsx";
 import CursorFluidEffect from "@/src/components/effects/CursorFluidEffect/CursorFluidEffect";
 import theaterState from "@/app/api/theater-state/Water Hero Screen.theatre-project-state.json";
@@ -377,16 +382,43 @@ function Scene({ theatreSheet }: { theatreSheet: ISheet }) {
   );
 }
 
+function SceneReadyMarker({ onReady }: { onReady: () => void }) {
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
+
+  return null;
+}
+
 export default function BottleHero() {
   useTheatreStudio();
   const [productionTheatreState, setProductionTheatreState] =
     useState<TheatreState | null>(null);
   const [isTheatreStateReady, setIsTheatreStateReady] = useState(false);
+  const [isSceneReady, setIsSceneReady] = useState(false);
+  const preloadState = useHeroScenePreloader();
+  const loaderGate = useSceneLoaderGate({
+    preloadDone: preloadState.done,
+    sceneReady: isSceneReady,
+  });
   const scrollWrapperRef = useRef<HTMLDivElement>(null);
   const scrollContentRef = useRef<HTMLDivElement>(null);
   const theatreRuntime = isTheatreStateReady
     ? getTheatreRuntime(productionTheatreState ?? theaterState)
     : null;
+  const isLoaderVisible = !loaderGate.complete;
+  const loaderProgress = loaderGate.complete
+    ? 100
+    : Math.min(
+        99,
+        preloadState.progress * 0.62 +
+          loaderGate.r3fProgress * 0.28 +
+          (isSceneReady ? 10 : 0),
+      );
+
+  const handleSceneReady = useCallback(() => {
+    setIsSceneReady(true);
+  }, []);
 
   useEffect(() => {
     let isActive = true;
@@ -451,7 +483,10 @@ export default function BottleHero() {
               }}
               shadows
             >
-              <Scene theatreSheet={theatreRuntime.sheet} />
+              <Suspense fallback={null}>
+                <Scene theatreSheet={theatreRuntime.sheet} />
+                <SceneReadyMarker onReady={handleSceneReady} />
+              </Suspense>
             </Canvas>  
           </div>
           <TheatreScrollSmoother
@@ -480,6 +515,7 @@ export default function BottleHero() {
         <TheatreStatePanel project={theatreRuntime.project} />
       ) : null}
       {isDevelopment ? <Leva collapsed /> : null}
+      <HeroSceneLoader visible={isLoaderVisible} progress={loaderProgress} />
     </main>
   );
 }

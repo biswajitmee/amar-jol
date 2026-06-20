@@ -9,6 +9,7 @@ import HeroWaterStage from "./HeroWaterStage";
 import ImportedBiswajitStage from "./ImportedBiswajitStage";
 import LumiereBottleStage from "./LumiereBottleStage";
 import SketchModelsStage from "./SketchModelsStage";
+import GalleryWheelStage from "./GalleryWheelStage";
 // import ImagePlane from "./ImagePlane";
 
 import SkyImageBackground from "@/src/waterpro/environment/SkyImageBackground.jsx";
@@ -33,6 +34,7 @@ export default function HeroStageScene({
       <HelixaBubblePathStage theatreSheet={theatreSheet} />
       <SketchModelsStage theatreSheet={theatreSheet} />
       <ImportedBiswajitStage theatreSheet={theatreSheet} />
+      <GalleryWheelStage theatreSheet={theatreSheet} />
       {/* <ImagePlane url="/door.png" theatreSheet={theatreSheet} /> */}
 
 
